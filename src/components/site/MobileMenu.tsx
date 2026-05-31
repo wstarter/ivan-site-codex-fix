@@ -116,7 +116,7 @@ export function MobileMenu({ open, onClose }: { open: boolean; onClose: () => vo
                 const Icon = menuIcons[item.icon] ?? Home;
                 const isLast = i === items.length - 1;
                 return (
-                  <li key={item.to} style={!isLast ? { borderBottom: "1px solid rgba(217,154,58,0.14)" } : undefined}>
+                  <li key={item.to} style={!isLast ? { borderBottom: "1px solid color-mix(in oklab, var(--color-primary) 14%, transparent)" } : undefined}>
                     <Link
                       to={item.to}
                       onClick={onClose}

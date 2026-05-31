@@ -1,6 +1,8 @@
 import { ShieldCheck, CalendarDays, Instagram, Youtube, Music2, Facebook } from "lucide-react";
 import { brand } from "@/lib/site-data";
 
+const responseText = "Svakom upitu pristupamo lično i preuzimamo dalju komunikaciju do potvrde termina.";
+
 /**
  * Premium response badge (replaces former green block).
  * Dark bronze→gold gradient, champagne border, subtle glow.
@@ -9,7 +11,7 @@ export function InfoPanel({
   headline = "GARANTUJEMO ODGOVOR I PONUDU",
   subline = "U ROKU OD",
   big = "24h",
-  footer = "OD PRIJEMA UPITA, ČESTO I RANIJE.",
+  footer = responseText,
 }: {
   headline?: string; subline?: string; big?: string; footer?: string;
 }) {

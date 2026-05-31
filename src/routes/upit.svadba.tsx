@@ -30,7 +30,7 @@ function WeddingForm() {
   const { state, set, errors, onSubmit } = useInquiryForm("wedding", {
     datum: "", lokacija: "", brojGostiju: "",
     budget: budgetConfig.defaults.wedding,
-    dodatni: "", video: "", internacionalno: "", kulture: "", napomena: "",
+    dodatni: "", internacionalno: "", kulture: "", napomena: "",
     ime: "", telefon: "", email: "", saglasan: false,
   }, (s) => {
     const e: Record<string, string> = {};
@@ -38,7 +38,6 @@ function WeddingForm() {
     if (!required(s.lokacija)) e.lokacija = "Obavezno polje";
     if (!required(s.brojGostiju)) e.brojGostiju = "Obavezno polje";
     if (!required(s.dodatni)) e.dodatni = "Izaberite opciju";
-    if (!required(s.video)) e.video = "Izaberite opciju";
     if (!required(s.internacionalno)) e.internacionalno = "Izaberite opciju";
     if (!required(s.ime)) e.ime = "Obavezno polje";
     if (!required(s.telefon)) e.telefon = "Obavezno polje";
@@ -71,44 +70,41 @@ function WeddingForm() {
         </FormSection>
 
         <FormSection title="BUDŽET">
-          <FormField number={4} label="Budžet za muzički program (€)" required hint="Izaberite okvirni budžet">
+          <FormField number={4} label="Koji je vaš planirani budžet?" required hint="Izaberite okvirni budžet">
             <BudgetSlider formKey="wedding" value={state.budget} onChange={(v) => set("budget", v)} />
           </FormField>
         </FormSection>
 
         <FormSection title="DODATNE OPCIJE">
-          <FormField number={5} label="Dodatni muzički & show program" required hint="Skup svatova, torta, specijalni performansi" error={errors.dodatni}>
+          <FormField number={5} label="Dodatni muzički & show program" required hint="Kvarteti za vreme skupa svatova, DJ-evi za vreme torte, kabare program i još mnogo toga." error={errors.dodatni}>
             <RadioGroup name="dodatni" value={state.dodatni} onChange={(v) => set("dodatni", v)} options={["Da", "Ne", "Želim preporuku"]} />
           </FormField>
-          <FormField number={6} label="Video snimanje pre rezervacije" required hint="Kratak video poziv (do 30 min)" error={errors.video}>
-            <RadioGroup name="video" value={state.video} onChange={(v) => set("video", v)} options={["Da", "Ne", "Kasnije"]} />
-          </FormField>
-          <FormField number={7} label="Internacionalno venčanje" required hint="Različite kulture / jezici" error={errors.internacionalno}>
+          <FormField number={6} label="Da li očekujete veći broj stranih gostiju ili gostiju iz različitih kultura?" required hint="Strani gosti, kulture i jezici" error={errors.internacionalno}>
             <div className="space-y-3">
               <RadioGroup name="inter" value={state.internacionalno} onChange={(v) => set("internacionalno", v)} options={["Da", "Ne"]} />
               <input className="input-base" placeholder="Koje kulture / jezici su važni? (opciono)" value={state.kulture} onChange={(e) => set("kulture", e.target.value)} />
             </div>
           </FormField>
-          <FormField number={8} label="Posebni zahtevi i napomene" hint="Pesme, želje, pitanja…">
+          <FormField number={7} label="Posebni zahtevi i napomene" hint="Pesme, želje, pitanja…">
             <textarea className="input-base min-h-[110px]" placeholder="Unesite vaše zahteve, napomene ili pitanja…" value={state.napomena} onChange={(e) => set("napomena", e.target.value)} />
           </FormField>
         </FormSection>
 
         <FormSection title="KONTAKT PODACI">
-          <FormField number={9} label="Ime i prezime" required error={errors.ime}>
+          <FormField number={8} label="Ime i prezime" required error={errors.ime}>
             <input className={`input-base ${errors.ime ? "input-error" : ""}`} placeholder="Vaše ime i prezime" value={state.ime} onChange={(e) => set("ime", e.target.value)} />
           </FormField>
-          <FormField number={10} label="Telefon (Viber / WhatsApp)" required error={errors.telefon}>
+          <FormField number={9} label="Telefon (Viber / WhatsApp)" required error={errors.telefon}>
             <input type="tel" className={`input-base ${errors.telefon ? "input-error" : ""}`} placeholder="Vaš broj telefona" value={state.telefon} onChange={(e) => set("telefon", e.target.value)} />
           </FormField>
-          <FormField number={11} label="Email adresa" required error={errors.email}>
+          <FormField number={10} label="Email adresa" required error={errors.email}>
             <input type="email" className={`input-base ${errors.email ? "input-error" : ""}`} placeholder="Vaša email adresa" value={state.email} onChange={(e) => set("email", e.target.value)} />
           </FormField>
         </FormSection>
 
         <div className="pt-4 space-y-5">
           <ConsentField checked={state.saglasan} onChange={(v) => set("saglasan", v)} error={errors.saglasan} />
-          <CTAButton type="submit" variant="primary" fullWidth><Send size={16} /> POPUNI UPIT ZA SVADBU</CTAButton>
+          <CTAButton type="submit" variant="primary" fullWidth><Send size={16} /> POŠALJI UPIT</CTAButton>
           <p className="text-small text-muted-foreground text-center">Garantujemo odgovor i ponudu u roku od 24h od prijema upita, često i ranije.</p>
         </div>
       </form>

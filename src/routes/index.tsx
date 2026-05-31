@@ -107,10 +107,10 @@ function HomePage() {
       </SectionWrapper>
 
       {/* FAQ PREVIEW */}
-      <SectionWrapper eyebrow="FAQ" title="Najčešća pitanja">
+      <SectionWrapper eyebrow="NAJČEŠĆA PITANJA I ODGOVORI" title="Najčešća pitanja i odgovori">
         <FaqPreview />
         <div className="mt-6">
-          <CTALink to="/faq" variant="outline">SVA PITANJA <ChevronRight size={14} /></CTALink>
+          <CTALink to="/faq" variant="outline">NAJČEŠĆA PITANJA I ODGOVORI <ChevronRight size={14} /></CTALink>
         </div>
       </SectionWrapper>
 
@@ -135,7 +135,7 @@ function FaqPreview() {
   return (
     <div className="space-y-2 premium-panel p-2 md:p-3">
       {items.map((item, i) => (
-        <div key={i} className="p-4 md:p-5" style={i < items.length - 1 ? { borderBottom: "1px solid rgba(217,154,58,0.18)" } : undefined}>
+        <div key={i} className="p-4 md:p-5" style={i < items.length - 1 ? { borderBottom: "1px solid var(--color-border)" } : undefined}>
           <button className="w-full flex items-center justify-between gap-4 text-left" onClick={() => setOpen(open === i ? null : i)}>
             <span className="text-body font-semibold text-foreground">{item.q}</span>
             <ChevronRight size={16} className={`transition-transform ${open === i ? "rotate-90" : ""}`} />
@@ -206,7 +206,7 @@ function Hero() {
               </CTALink>
             </div>
             <div className="mt-2.5">
-              <CTALink to={h.ctas.tertiary.to} variant="ghost">
+              <CTALink to={h.ctas.tertiary.to} variant="ghost" external={h.ctas.tertiary.external}>
                 <Play size={14} /> {h.ctas.tertiary.label}
               </CTALink>
             </div>

@@ -47,7 +47,7 @@ function ClubForm() {
       accent="KLUPSKU SVIRKU"
       heroImage={hero.src}
       intro="Popunite formular sa detaljima za vašu klupsku svirku ili gastro bar event."
-      side={<InfoPanel headline="GARANTOVANI ODGOVOR I PONUDA" subline="U ROKU OD" big="24h" footer="OD UPITA" />}
+      side={<InfoPanel headline="GARANTOVANI ODGOVOR I PONUDA" subline="U ROKU OD" big="24h" />}
     >
       <Cf7FormSlot formKey="club">
       <form onSubmit={onSubmit} noValidate className="form-shell cf7-ready" data-form-key="club">
@@ -84,7 +84,7 @@ function ClubForm() {
 
         <FormSection title="FINANSIJE">
           <FormField number={8} label="Honorar preko fakture?" required error={errors.faktura}><RadioGroup name="fakt" value={state.faktura} onChange={(v) => set("faktura", v)} options={["Da", "Ne"]} /></FormField>
-          <FormField number={9} label="Okvirni budžet za vaš lokal (€)" required hint="Izaberite okvirni budžet">
+          <FormField number={9} label="Koji je vaš planirani budžet?" required hint="Izaberite okvirni budžet">
             <BudgetSlider formKey="club" value={state.budget} onChange={(v) => set("budget", v)} />
           </FormField>
           <FormField number={10} label="Napomena za vaš lokal"><textarea className="input-base min-h-[100px]" value={state.napomena} onChange={(e) => set("napomena", e.target.value)} /></FormField>
@@ -98,7 +98,7 @@ function ClubForm() {
 
         <div className="pt-4 space-y-5">
           <ConsentField checked={state.saglasan} onChange={(v) => set("saglasan", v)} error={errors.saglasan} />
-          <CTAButton type="submit" variant="primary" fullWidth><Send size={16} /> POŠALJI UPIT ZA KLUPSKU SVIRKU</CTAButton>
+          <CTAButton type="submit" variant="primary" fullWidth><Send size={16} /> POŠALJI UPIT</CTAButton>
         </div>
       </form>
       </Cf7FormSlot>

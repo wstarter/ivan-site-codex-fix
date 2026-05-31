@@ -10,7 +10,7 @@ export const Route = createFileRoute("/faq")({
   head: () => ({
     meta: [
       { title: "Najčešća pitanja — Ivan Jovanović" },
-      { name: "description", content: "FAQ: rezervacija, plaćanje, organizacija događaja, repertoar, ozvučenje, sastav benda." },
+      { name: "description", content: "Najčešća pitanja i odgovori: rezervacija, plaćanje, organizacija događaja, repertoar, ozvučenje, sastav benda." },
     ],
   }),
   component: FaqPage,
@@ -22,9 +22,9 @@ function FaqPage() {
   return (
     <main>
       <PageHero
-        eyebrow="FAQ"
-        title="NAJČEŠĆA"
-        accent="PITANJA"
+        eyebrow="NAJČEŠĆA PITANJA I ODGOVORI"
+        title="NAJČEŠĆA PITANJA I"
+        accent="ODGOVORI"
         intro="Odgovori na ključna pitanja klijenata o procesu bukiranja, organizaciji i tehničkim uslovima."
         image={hero.src}
       />
@@ -42,7 +42,7 @@ function FaqPage() {
                 const isOpen = openKey === key;
                 const isLast = i === group.items.length - 1;
                 return (
-                  <div key={key} className="p-4 md:p-5" style={!isLast ? { borderBottom: "1px solid rgba(217,154,58,0.18)" } : undefined}>
+                  <div key={key} className="p-4 md:p-5" style={!isLast ? { borderBottom: "1px solid var(--color-border)" } : undefined}>
                     <button
                       className="w-full flex items-center justify-between gap-4 text-left"
                       onClick={() => setOpenKey(isOpen ? null : key)}

@@ -46,7 +46,7 @@ function BirthdayForm() {
       accent="ROĐENDAN / JUBILEJ"
       heroImage={hero.src}
       intro="Popunite formular kako bismo razumeli vaš događaj i pripremili odgovarajući muzički program."
-      side={<InfoPanel headline="ODGOVOR DOBIJATE GARANTOVANO" subline="U ROKU OD" big="24h" footer="KALENDAR SE AŽURIRA SVAKODNEVNO" />}
+      side={<InfoPanel headline="ODGOVOR DOBIJATE GARANTOVANO" subline="U ROKU OD" big="24h" />}
     >
       <Cf7FormSlot formKey="birthday">
       <form onSubmit={onSubmit} noValidate className="form-shell cf7-ready" data-form-key="birthday">
@@ -60,7 +60,7 @@ function BirthdayForm() {
 
         <FormSection title="DODATNE OPCIJE">
           <FormField number={5} label="Dodatan sadržaj" required error={errors.dodatni}><RadioGroup name="dod" value={state.dodatni} onChange={(v) => set("dodatni", v)} options={["Da", "Ne", "Želim preporuku"]} /></FormField>
-          <FormField number={6} label="Planirani budžet za vaš rođendan (€)" required hint="Izaberite okvirni budžet">
+          <FormField number={6} label="Koji je vaš planirani budžet?" required hint="Izaberite okvirni budžet">
             <BudgetSlider formKey="birthday" value={state.budget} onChange={(v) => set("budget", v)} />
           </FormField>
           <FormField number={7} label="Da li je neophodan dress code?" required error={errors.dressCode}>
@@ -80,7 +80,7 @@ function BirthdayForm() {
 
         <div className="pt-4 space-y-5">
           <ConsentField checked={state.saglasan} onChange={(v) => set("saglasan", v)} error={errors.saglasan} />
-          <CTAButton type="submit" variant="primary" fullWidth><Send size={16} /> POŠALJI UPIT ZA ROĐENDAN / JUBILEJ</CTAButton>
+          <CTAButton type="submit" variant="primary" fullWidth><Send size={16} /> POŠALJI UPIT</CTAButton>
         </div>
       </form>
       </Cf7FormSlot>

@@ -40,9 +40,9 @@ export const heroContent = {
   slogan: { line1: "Profesionalnost. Energija. Emocija.", line2: "Muzika koja povezuje." },
   image: { src: visualAssets.heroIvan.src, alt: visualAssets.heroIvan.alt },
   ctas: {
-    primary:   { label: "PROVERI TERMINE",     to: "/dostupni-termini" },
-    secondary: { label: "POŠALJI UPIT",        to: "/upit/svadba" },
-    tertiary:  { label: "POGLEDAJ KAKO RADIMO", to: "/nacin-rada" },
+    primary:   { label: "PROVERI DOSTUPNE TERMINE",     to: "/dostupni-termini" },
+    secondary: { label: "POŠALJI UPIT",                 to: "/usluge" },
+    tertiary:  { label: "POGLEDAJ VIDEO KAKO RADIMO",   to: "https://www.instagram.com/p/DP3oHrNiHSD/", external: true },
   },
   metrics: [
     { icon: "music",      value: "15+",     label: "GODINA ISKUSTVA",              mobile: true },
@@ -63,6 +63,7 @@ export const navItems = [
 ] as const;
 
 export type NavItem = { label: string; to: string; icon: string };
+const FAQ_LABEL = "NAJČEŠĆA PITANJA I ODGOVORI";
 
 /**
  * Effective primary nav: WordPress menu wins when present, else local fallback.
@@ -85,7 +86,7 @@ function mapWpMenu(items: WpMenuItem[] | null, fallback: ReadonlyArray<NavItem>)
       if (path !== "/" && path.endsWith("/")) path = path.slice(0, -1);
       const fallbackMatch = fallback.find((i) => i.to === path);
       return {
-        label: m.label || fallbackMatch?.label || path,
+        label: path === "/faq" ? FAQ_LABEL : m.label || fallbackMatch?.label || path,
         to: path,
         icon: iconByPath[path] || fallbackMatch?.icon || "home",
       };
@@ -123,7 +124,7 @@ export const workflowSteps = [
   { n: "01", title: "Proverite dostupne termine", desc: "Otvorite kalendar i pronađite slobodan datum." },
   { n: "02", title: "Izaberite tip događaja",     desc: "Svadba, korporativni event, klupska svirka ili rođendan." },
   { n: "03", title: "Pošaljite upit",             desc: "Popunite kratak formular sa detaljima događaja." },
-  { n: "04", title: "Odgovor u roku od 24h",      desc: "Ivan odgovara lično, sa personalizovanom ponudom." },
+  { n: "04", title: "Odgovor u roku od 24h",      desc: "Svakom upitu pristupamo lično i preuzimamo dalju komunikaciju do potvrde termina." },
   { n: "05", title: "Potvrda termina",            desc: "Termin se potvrđuje nakon dogovora, avansa i ugovora." },
 ];
 

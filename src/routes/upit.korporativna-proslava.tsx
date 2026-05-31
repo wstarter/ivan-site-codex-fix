@@ -47,7 +47,7 @@ function CorporateForm() {
       accent="KORPORATIVNU PROSLAVU"
       heroImage={hero.src}
       intro="Popunite formular kako bismo pripremili tačnu ponudu za vaš korporativni event."
-      side={<InfoPanel headline="GARANTOVANI ODGOVOR" subline="NAJKASNIJE U ROKU OD" big="24h" footer="OD PRIJEMA UPITA" />}
+      side={<InfoPanel headline="GARANTOVANI ODGOVOR" subline="NAJKASNIJE U ROKU OD" big="24h" />}
     >
       <Cf7FormSlot formKey="corporate">
       <form onSubmit={onSubmit} noValidate className="form-shell cf7-ready" data-form-key="corporate">
@@ -72,7 +72,7 @@ function CorporateForm() {
 
         <FormSection title="DODATNI SADRŽAJ I BUDŽET">
           <FormField number={6} label="Da li želite da preko nas bukirate dodatni sadržaj?" required error={errors.bukDodatni}><RadioGroup name="buk" value={state.bukDodatni} onChange={(v) => set("bukDodatni", v)} options={["Da", "Ne", "Želim preporuku"]} /></FormField>
-          <FormField number={7} label="Planirani budžet firme za korporativnu proslavu (€)" required hint="Izaberite okvirni budžet">
+          <FormField number={7} label="Koji je vaš planirani budžet?" required hint="Izaberite okvirni budžet">
             <BudgetSlider formKey="corporate" value={state.budget} onChange={(v) => set("budget", v)} />
           </FormField>
           <FormField number={8} label="Plaćanje preko fakture?" required error={errors.faktura}><RadioGroup name="fakt" value={state.faktura} onChange={(v) => set("faktura", v)} options={["Da", "Ne"]} /></FormField>
@@ -93,7 +93,7 @@ function CorporateForm() {
 
         <div className="pt-4 space-y-5">
           <ConsentField checked={state.saglasan} onChange={(v) => set("saglasan", v)} error={errors.saglasan} />
-          <CTAButton type="submit" variant="primary" fullWidth><Send size={16} /> POŠALJI UPIT ZA KORPORATIVNU PROSLAVU</CTAButton>
+          <CTAButton type="submit" variant="primary" fullWidth><Send size={16} /> POŠALJI UPIT</CTAButton>
         </div>
       </form>
       </Cf7FormSlot>
