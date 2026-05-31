@@ -1,0 +1,3 @@
+.ivan-settings-wrap h2 { margin-top: 2em; padding-top: 1em; border-top: 1px solid #ddd; }
+.ivan-settings-wrap .ivan-media-url { width: 60%; margin-right: 8px; }
+.ivan-settings-wrap textarea.code { font-family: Menlo, Consolas, monospace; }

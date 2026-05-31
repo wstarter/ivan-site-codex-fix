@@ -1,0 +1,605 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* Ivan Jovanović × Sedative Band — design system v2.
+ * Dark cinematic premium. Mobile-first. WordPress-friendly tokens. */
+
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Manrope:wght@300;400;500;600;700&family=Allura&display=swap");
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ring-offset-background: var(--background);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-card-dark: var(--card-dark);
+  --color-bronze: var(--bronze);
+  --color-gold-light: var(--gold-light);
+  --color-gold-muted: var(--gold-muted);
+  --color-available: var(--available);
+  --color-unavailable: var(--unavailable);
+  --font-display: "Bebas Neue", sans-serif;
+  --font-body: "Manrope", sans-serif;
+  --font-script: "Allura", cursive;
+}
+
+:root {
+  --radius: 0.75rem;
+  /* WordPress-mappable color tokens — change here to retheme globally. */
+  --color-black-main:  #020202;
+  --color-black-soft:  #050505;
+  --color-black-card:  #090909;
+  --color-gold-main:   #D99A3A;
+  --color-gold-light:  #F1B75A;
+  --color-gold-muted:  #B87933;
+  --color-text-main:   #F5F0E8;
+  --color-text-muted:  #B8AFA3;
+  --color-border-gold: rgba(217,154,58,0.35);
+
+  /* Theme bridge (shadcn / Tailwind) — wired to brand tokens above */
+  --background: var(--color-black-main);
+  --surface: var(--color-black-soft);
+  --surface-2: var(--color-black-card);
+  --card-dark: var(--color-black-card);
+  --foreground: var(--color-text-main);
+  --muted-foreground: var(--color-text-muted);
+
+  --card: var(--surface-2);
+  --card-foreground: var(--foreground);
+  --popover: var(--surface-2);
+  --popover-foreground: var(--foreground);
+
+  --primary: var(--color-gold-main);
+  --primary-foreground: var(--color-black-main);
+  --gold-light: var(--color-gold-light);
+  --gold-muted: var(--color-gold-muted);
+  --accent: var(--primary);
+  --accent-foreground: var(--primary-foreground);
+  --bronze: oklch(0.50 0.08 55);                 /* ~#7C5532 */
+
+  --secondary: oklch(0.24 0.006 60);
+  --secondary-foreground: var(--foreground);
+  --muted: oklch(0.22 0.005 60);
+  --destructive: oklch(0.46 0.13 25);
+  --destructive-foreground: oklch(0.97 0 0);
+  --border: rgba(217,154,58,0.18);
+  --input: oklch(0.24 0.008 60);
+  --ring: var(--color-gold-main);
+
+  --available: oklch(0.58 0.09 145);             /* muted sage green ~#5F7F4A */
+  --unavailable: oklch(0.42 0.14 28);            /* deep bordeaux ~#7C2525 */
+
+  --chart-1: var(--primary);
+  --chart-2: var(--gold-light);
+  --chart-3: var(--bronze);
+  --chart-4: var(--available);
+  --chart-5: var(--unavailable);
+  --sidebar: var(--surface);
+  --sidebar-foreground: var(--foreground);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-accent: var(--surface-2);
+  --sidebar-accent-foreground: var(--foreground);
+  --sidebar-border: var(--border);
+  --sidebar-ring: var(--ring);
+
+  /* WordPress-mappable font variables */
+  --font-heading:   "Bebas Neue", sans-serif;
+  --font-body:      "Manrope", sans-serif;
+  --font-signature: "Allura", cursive;
+}
+
+@layer base {
+  html, body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  * { border-color: var(--color-border); }
+  h1, h2, h3, h4, h5 {
+    font-family: var(--font-display);
+    font-weight: 400; /* Bebas Neue only has 400 */
+    letter-spacing: 0.01em;
+  }
+  a, button, input, textarea, select, label, nav, p, li, small, span {
+    font-family: inherit;
+  }
+  ::selection { background: var(--color-primary); color: var(--color-primary-foreground); }
+}
+
+@layer components {
+  .display { font-family: var(--font-display); text-transform: uppercase; letter-spacing: 0.01em; line-height: 0.95; }
+  .body-font { font-family: var(--font-body); }
+  .font-sans, .font-serif, .font-mono { font-family: var(--font-body) !important; }
+  .script { font-family: var(--font-script); font-weight: 400; letter-spacing: 0; }
+  .signature-text {
+    font-family: var(--font-signature);
+    color: var(--color-primary);
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 1;
+  }
+  .eyebrow {
+    font-family: var(--font-body);
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    font-size: 0.72rem;
+    color: var(--color-muted-foreground);
+    font-weight: 600;
+  }
+  .panel {
+    background: linear-gradient(180deg, var(--color-surface-2) 0%, color-mix(in oklab, var(--color-surface-2) 85%, black) 100%);
+    border: 1px solid var(--color-border);
+    border-radius: 1.25rem;
+  }
+  .gold-border { border: 1px solid color-mix(in oklab, var(--color-primary) 45%, transparent); }
+  .gold-text { color: var(--color-primary); }
+  .gold-glow { box-shadow: 0 8px 32px -16px color-mix(in oklab, var(--color-primary) 50%, transparent), inset 0 1px 0 color-mix(in oklab, var(--color-gold-light) 25%, transparent); }
+  .btn-base {
+    display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+    font-family: var(--font-body); font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.08em; font-size: 0.85rem;
+    min-height: 48px; padding: 0 1.25rem; border-radius: 0.85rem;
+    transition: all 0.2s ease; cursor: pointer;
+  }
+  .btn-primary {
+    background: linear-gradient(180deg, var(--color-gold-light), var(--color-primary) 60%, var(--color-gold-muted));
+    color: var(--color-primary-foreground);
+    box-shadow: 0 10px 28px -14px color-mix(in oklab, var(--color-primary) 70%, transparent);
+  }
+  .btn-primary:hover { filter: brightness(1.06); }
+  .btn-outline {
+    background: transparent; color: var(--color-foreground);
+    border: 1px solid color-mix(in oklab, var(--color-primary) 60%, transparent);
+  }
+  .btn-outline:hover { background: color-mix(in oklab, var(--color-primary) 10%, transparent); }
+  .btn-ghost { background: transparent; color: var(--color-muted-foreground); }
+
+  /* WordPress-friendly form shell classes */
+  .form-shell { display: flex; flex-direction: column; gap: 1.5rem; }
+  .form-section { border-bottom: 1px solid var(--color-border); padding-bottom: 0.5rem; }
+  .form-section:last-child { border-bottom: 0; }
+  .form-field { display: flex; flex-direction: column; gap: 0.5rem; padding: 0.75rem 0; }
+  .form-label { font-family: var(--font-body); font-weight: 500; font-size: 0.95rem; color: var(--color-foreground); }
+  .form-input, .input-base {
+    width: 100%;
+    background: color-mix(in oklab, var(--color-background) 70%, black);
+    border: 1px solid var(--color-border);
+    border-radius: 0.6rem;
+    padding: 0.85rem 1rem;
+    color: var(--color-foreground);
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    transition: border-color 0.2s ease;
+  }
+  .form-input::placeholder, .input-base::placeholder { color: color-mix(in oklab, var(--color-muted-foreground) 70%, transparent); }
+  .form-input:focus, .input-base:focus { outline: none; border-color: var(--color-primary); box-shadow: 0 0 0 3px color-mix(in oklab, var(--color-primary) 18%, transparent); }
+  .input-error { border-color: var(--color-unavailable); }
+
+  .container-site { width: 100%; max-width: 1280px; margin: 0 auto; padding-inline: 20px; }
+
+  .heading-hero { font-family: var(--font-display); text-transform: uppercase; line-height: 0.9; font-weight: 400; font-size: clamp(3.25rem, 16vw, 6rem); letter-spacing: 0.01em; }
+  .heading-h1   { font-family: var(--font-display); text-transform: uppercase; line-height: 0.95; font-weight: 400; font-size: clamp(3rem, 8vw, 5rem); letter-spacing: 0.01em; }
+  .heading-h2   { font-family: var(--font-display); text-transform: uppercase; line-height: 1.0;  font-weight: 400; font-size: clamp(2.375rem, 5vw, 4rem); letter-spacing: 0.01em; }
+  .heading-h3   { font-family: var(--font-display); text-transform: uppercase; line-height: 1.1;  font-weight: 400; font-size: clamp(1.5rem, 3vw, 2rem); letter-spacing: 0.015em; }
+  .heading-card { font-family: var(--font-display); text-transform: uppercase; line-height: 1.05; font-weight: 400; font-size: clamp(1.375rem, 3.2vw, 2rem); letter-spacing: 0.015em; }
+  .hero-event-title { font-family: var(--font-display); text-transform: uppercase; line-height: 1.02; font-weight: 400; font-size: clamp(1.375rem, 2.2vw, 1.55rem); letter-spacing: 0.015em; }
+
+  /* ---------- HERO typography lock ---------- */
+  .hero-title       { font-family: var(--font-heading); text-transform: uppercase; font-weight: 400; line-height: 0.88; letter-spacing: 0.01em; font-size: clamp(3.625rem, 14vw, 6.5rem); }
+  .hero-signature   { font-family: var(--font-signature); font-weight: 400; line-height: 1; color: var(--color-primary); font-size: clamp(1.75rem, 3vw, 2.875rem); }
+  .hero-feat        { font-family: var(--font-heading); text-transform: uppercase; line-height: 1; font-weight: 400; font-size: clamp(2.5rem, 6vw, 4.5rem); letter-spacing: 0.02em; }
+  .hero-slogan      { font-family: var(--font-body); font-weight: 400; font-size: clamp(1rem, 1.6vw, 1.375rem); line-height: 1.45; color: var(--color-text-main); }
+  .hero-metric-num  { font-family: var(--font-heading); font-weight: 400; font-size: clamp(1.75rem, 3.6vw, 2.75rem); line-height: 1; letter-spacing: 0.01em; color: var(--color-gold-main); }
+  .hero-metric-lbl  { font-family: var(--font-body); font-weight: 600; font-size: clamp(0.75rem, 1.1vw, 0.875rem); letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-text-muted); }
+
+  /* ============================================================
+   * GLOBAL TYPOGRAPHY SYSTEM (WordPress-mappable)
+   * Change fonts in :root via --font-heading / --font-body /
+   * --font-signature. All components reference these classes —
+   * no hardcoded font-family in components.
+   * ============================================================ */
+  .text-display       { font-family: var(--font-heading); font-weight: 400; font-size: clamp(4.5rem, 6vw, 6.5rem);  line-height: 0.88; letter-spacing: 0.01em; text-transform: uppercase; }
+  .text-h1            { font-family: var(--font-heading); font-weight: 400; font-size: clamp(2.75rem, 5vw, 5.5rem); line-height: 0.92; letter-spacing: 0.01em; text-transform: uppercase; }
+  .text-h2            { font-family: var(--font-heading); font-weight: 400; font-size: clamp(2.125rem, 4vw, 4.25rem); line-height: 0.95; letter-spacing: 0.01em; text-transform: uppercase; }
+  .text-h3            { font-family: var(--font-heading); font-weight: 400; font-size: clamp(1.875rem, 2.6vw, 2.75rem); line-height: 1; letter-spacing: 0.01em; text-transform: uppercase; }
+  .text-card-title    { font-family: var(--font-heading); font-weight: 400; font-size: clamp(1.625rem, 2.2vw, 2.25rem); line-height: 1; letter-spacing: 0.01em; text-transform: uppercase; }
+  .text-body          { font-family: var(--font-body);    font-weight: 400; font-size: clamp(0.9375rem, 1.05vw, 1.125rem); line-height: 1.65; }
+  .text-small         { font-family: var(--font-body);    font-weight: 400; font-size: 0.8125rem; line-height: 1.5; }
+  .text-button        { font-family: var(--font-body);    font-weight: 700; font-size: 0.875rem; letter-spacing: 0.08em; text-transform: uppercase; }
+  .text-nav           { font-family: var(--font-body);    font-weight: 700; font-size: 0.8125rem; letter-spacing: 0.06em; text-transform: uppercase; }
+  .text-signature     { font-family: var(--font-signature); font-weight: 400; font-size: clamp(1.875rem, 3.4vw, 3rem); line-height: 1; }
+  .text-eyebrow       { font-family: var(--font-body);    font-weight: 700; font-size: 0.75rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--color-text-muted); }
+  .text-metric-number { font-family: var(--font-heading); font-weight: 400; font-size: clamp(1.75rem, 3vw, 2.75rem); line-height: 0.95; }
+  .text-metric-label  { font-family: var(--font-body);    font-weight: 600; font-size: 0.75rem; line-height: 1.35; letter-spacing: 0.18em; text-transform: uppercase; }
+
+  /* FEAT. label / band name — explicit hierarchy. Aliases of hero-feat-* */
+  .feat-label { font-family: var(--font-body); font-weight: 700; font-size: 0.8125rem; letter-spacing: 0.35em; text-transform: uppercase; color: color-mix(in oklab, var(--color-gold-main) 80%, transparent); }
+  .band-name  { font-family: var(--font-heading); font-weight: 400; font-size: clamp(2.125rem, 4vw, 4.25rem); line-height: 0.95; letter-spacing: 0.02em; text-transform: uppercase; color: var(--color-primary); }
+
+  /* Mobile minimums — keep core typography readable on small screens */
+  @media (max-width: 640px) {
+    .text-h1         { font-size: clamp(2.75rem, 11vw, 3.5rem); }
+    .text-h2         { font-size: clamp(2.125rem, 8.5vw, 2.75rem); }
+    .text-h3,
+    .text-card-title { font-size: clamp(1.5rem, 6.5vw, 2rem); }
+    .text-body       { font-size: 0.9375rem; }
+    .text-button,
+    .text-nav        { font-size: 0.8125rem; }
+    .band-name       { font-size: clamp(2.125rem, 10vw, 3.25rem); }
+    .hero-signature  { font-size: clamp(1.75rem, 8vw, 2.375rem); }
+  }
+
+  /* FEAT. (small, muted) / SEDATIVE BAND (large, gold) hierarchy */
+  .hero-feat-block { display: flex; align-items: baseline; gap: 0.6rem; flex-wrap: wrap; }
+  .hero-feat-small {
+    font-family: var(--font-body); font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.32em; font-size: clamp(0.7rem, 0.95vw, 0.85rem);
+    color: color-mix(in oklab, var(--color-gold-main) 75%, transparent);
+  }
+  .hero-feat-band {
+    font-family: var(--font-heading); text-transform: uppercase; line-height: 1;
+    font-weight: 400; font-size: clamp(2rem, 5vw, 3.75rem); letter-spacing: 0.03em;
+  }
+
+  /* Support block — compact, content-width, two rows */
+  .hero-support { display: inline-block; max-width: 320px; }
+  .hero-support-rule{
+    display:flex; align-items:center; gap:0.6rem;
+    font-family: var(--font-body); font-size:0.62rem; letter-spacing:0.4em;
+    color: var(--color-gold-main); text-transform: uppercase; white-space: nowrap;
+  }
+  .hero-support-rule::before, .hero-support-rule::after {
+    content:""; width: 36px; height:1px; background: var(--color-border-gold);
+  }
+  .hero-support-name{
+    font-family: var(--font-body); font-weight: 500; letter-spacing: 0.22em;
+    font-size: 0.78rem; color: var(--color-text-main); text-align:center;
+    white-space: nowrap;
+  }
+
+  /* ---------- Icon styles ---------- */
+  .icon-gold        { color: var(--color-gold-main); }
+  .icon-muted       { color: var(--color-text-muted); }
+  /* Free-standing line icons — no frame, no background. Used for program/service/highlight cards. */
+  .icon-free        { color: var(--color-gold-main); stroke-width: 1.4; background: transparent !important; border: 0 !important; padding: 0 !important; }
+  .icon-program     { color: var(--color-gold-main); stroke-width: 1.5; width: 36px; height: 36px; background: transparent; border: 0; }
+  .icon-service     { color: var(--color-gold-main); stroke-width: 1.5; width: 38px; height: 38px; background: transparent; border: 0; }
+  @media (min-width: 768px) {
+    .icon-program   { width: 44px; height: 44px; stroke-width: 1.5; }
+    .icon-service   { width: 48px; height: 48px; stroke-width: 1.5; }
+  }
+  /* Step/process icon — circle allowed (used in forms, ordered steps) */
+  .icon-step        { color: var(--color-gold-main); stroke-width: 1.5; }
+  /* CTA icon — small, functional (inside buttons) */
+  .icon-cta         { color: currentColor; stroke-width: 1.75; }
+  /* Status icon — calendar dots, thank-you, availability */
+  .icon-status      { color: var(--color-gold-main); stroke-width: 1.5; }
+  .metric-icon-free { color: var(--color-gold-main); stroke-width: 1.25; background: transparent !important; border: 0 !important; padding: 0 !important; }
+  .menu-icon-line   { color: var(--color-gold-main); stroke-width: 1.25; }
+
+  /* Mobile menu — active item background should be rectangular (no pill), aligned with row dividers */
+  .menu-item-active { background: rgba(217,154,58,0.10); border-radius: 0 !important; }
+
+  /* ---------- Hero stage: unified background + Ivan image + spotlights ---------- */
+  .hero-stage { position: relative; isolation: isolate; background: var(--color-black-main); }
+
+  /* Layer 1: single continuous background — no vertical seam */
+  .hero-bg {
+    position: absolute; inset: 0; z-index: 0; pointer-events: none;
+    background:
+      radial-gradient(ellipse 70% 55% at 78% 38%, rgba(217,154,58,0.18) 0%, rgba(217,154,58,0) 60%),
+      radial-gradient(ellipse 50% 40% at 85% 75%, rgba(184,121,51,0.12) 0%, rgba(184,121,51,0) 65%),
+      radial-gradient(ellipse 40% 35% at 70% 20%, rgba(140,110,200,0.08) 0%, rgba(140,110,200,0) 70%),
+      linear-gradient(180deg, var(--color-black-soft) 0%, var(--color-black-main) 85%);
+  }
+  /* Layer 2: animated spotlight glows behind Ivan only */
+  .hero-stage::before, .hero-stage::after {
+    content: ""; position: absolute; pointer-events: none; z-index: 1;
+    border-radius: 50%; filter: blur(70px); mix-blend-mode: screen;
+  }
+  .hero-stage::before {
+    width: 55vw; height: 55vw; right: -8vw; top: -10vw; opacity: 0.55;
+    background: radial-gradient(circle, rgba(241,183,90,0.42) 0%, rgba(241,183,90,0) 62%);
+    animation: heroSpotA 18s ease-in-out infinite alternate;
+  }
+  .hero-stage::after {
+    width: 38vw; height: 38vw; right: 4vw; bottom: -12vw; opacity: 0.4;
+    background: radial-gradient(circle, rgba(217,154,58,0.45) 0%, rgba(217,154,58,0) 65%);
+    animation: heroSpotB 22s ease-in-out infinite alternate;
+  }
+  @keyframes heroSpotA { from { transform: translate3d(0,0,0) scale(1); } to { transform: translate3d(-3vw, 2vw, 0) scale(1.06); } }
+  @keyframes heroSpotB { from { transform: translate3d(0,0,0) scale(1); } to { transform: translate3d(2vw,-2vw,0) scale(1.1); } }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-stage::before, .hero-stage::after { animation: none; }
+  }
+
+  /* Layer 3: Ivan transparent — frameless, masked into background */
+  .hero-ivan {
+    position: absolute; z-index: 2; pointer-events: none;
+    /* mobile defaults — centered, dominant */
+    top: 80px; left: 50%; transform: translateX(-50%);
+    width: 100vw; max-width: none; height: auto; max-height: 60vh;
+    object-fit: contain; object-position: top center;
+    -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 70%, transparent 100%);
+            mask-image: linear-gradient(180deg, #000 0%, #000 70%, transparent 100%);
+    opacity: 0.96;
+    filter: drop-shadow(0 30px 60px rgba(0,0,0,0.6));
+  }
+  @media (max-width: 430px) {
+    .hero-ivan { top: 84px; width: 104vw; max-height: 56vh; }
+  }
+  @media (max-width: 390px) {
+    .hero-ivan { top: 86px; width: 100vw; max-height: 52vh; }
+  }
+  @media (max-width: 360px) {
+    .hero-ivan { top: 88px; width: 96vw; max-height: 48vh; }
+  }
+  @media (min-width: 1024px) {
+    .hero-ivan {
+      top: auto; bottom: 0; left: auto;
+      right: max(0px, calc((100vw - 1440px) / 2));
+      transform: none;
+      width: 50%; max-width: 760px; height: 98%; max-height: none;
+      object-position: right bottom;
+      opacity: 1;
+      -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 26%, #000 100%),
+                           linear-gradient(180deg, #000 75%, transparent 100%);
+              mask-image: linear-gradient(90deg, transparent 0%, #000 26%, #000 100%),
+                           linear-gradient(180deg, #000 75%, transparent 100%);
+    }
+  }
+
+  /* Layer 4: readability overlay — sits between Ivan and text */
+  .hero-readability {
+    position: absolute; inset: 0; z-index: 3; pointer-events: none;
+    background:
+      linear-gradient(90deg, var(--color-black-main) 0%, rgba(2,2,2,0.78) 30%, rgba(2,2,2,0.18) 58%, rgba(2,2,2,0) 80%),
+      linear-gradient(180deg, transparent 70%, var(--color-black-main) 100%);
+  }
+  @media (max-width: 1023px) {
+    .hero-readability {
+      background:
+        linear-gradient(180deg, transparent 0%, transparent 38%, rgba(2,2,2,0.55) 58%, rgba(2,2,2,0.92) 78%, var(--color-black-main) 100%);
+    }
+  }
+
+  /* ---------- Glass panel (mobile menu) ---------- */
+  .glass-panel {
+    background: rgba(8, 8, 8, 0.62);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid var(--color-border-gold);
+    box-shadow: 0 18px 60px rgba(0,0,0,0.45);
+  }
+
+  /* ============================================================
+   * PREMIUM PANEL / CARD / GLASS SYSTEM (WordPress-mappable)
+   * Reusable building blocks for sections, cards, and CTA panels.
+   * Map to WordPress block classes 1:1.
+   * ============================================================ */
+
+  /* Section frame — outer wrapper, controlled width + mobile inset */
+  .section-frame { width: 100%; max-width: 1280px; margin-inline: auto; padding-inline: 16px; }
+  @media (min-width: 768px) { .section-frame { padding-inline: 24px; } }
+
+  .section-inner { padding-block: clamp(2.5rem, 6vw, 5rem); }
+
+  /* Gold / champagne borders */
+  .premium-border { border: 1px solid rgba(217,154,58,0.28); }
+  .premium-border-strong { border: 1px solid rgba(241,183,90,0.55); }
+  .gold-divider {
+    height: 1px; width: 100%;
+    background: linear-gradient(90deg, transparent, var(--color-border-gold), transparent);
+    border: 0;
+  }
+
+  /* Premium panel — base for cards and CTA blocks (dark glass + gold edge) */
+  .premium-panel {
+    position: relative;
+    background:
+      linear-gradient(180deg, rgba(12,12,12,0.78) 0%, rgba(6,6,6,0.78) 100%);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(217,154,58,0.28);
+    border-radius: 1.1rem;
+    box-shadow:
+      0 18px 60px rgba(0,0,0,0.45),
+      inset 0 1px 0 rgba(241,183,90,0.06);
+  }
+
+  /* Premium card — hoverable, with gold edge intensifying on hover */
+  .premium-card {
+    position: relative;
+    display: flex; flex-direction: column;
+    background:
+      linear-gradient(180deg, rgba(12,12,12,0.78) 0%, rgba(6,6,6,0.82) 100%);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(217,154,58,0.26);
+    border-radius: 1.1rem;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+    padding: clamp(1.4rem, 2.2vw, 1.85rem);
+    transition: border-color .25s ease, transform .25s ease, box-shadow .25s ease, background .25s ease;
+  }
+  .premium-card:hover {
+    border-color: rgba(241,183,90,0.55);
+    box-shadow:
+      0 22px 60px rgba(0,0,0,0.55),
+      0 0 0 1px rgba(241,183,90,0.18),
+      0 0 40px -10px rgba(217,154,58,0.30);
+    transform: translateY(-2px);
+  }
+  .premium-card-compact { padding: 1.1rem 1.25rem; }
+
+  /* Card internal regions */
+  .card-content { display: flex; flex-direction: column; gap: 0.55rem; flex: 1; }
+  .card-meta    { color: var(--color-text-muted); }
+  .card-cta {
+    margin-top: 1.1rem; padding-top: 0.9rem;
+    border-top: 1px solid rgba(217,154,58,0.18);
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    color: var(--color-primary);
+  }
+  .card-grid { display: grid; gap: 1rem; }
+
+  /* Panel header / body */
+  .panel-header { padding: 1.1rem 1.25rem; border-bottom: 1px solid rgba(217,154,58,0.18); }
+  .panel-body   { padding: 1.25rem; }
+
+  /* Section glass — for CTA / wrapper blocks (e.g. "Prvi korak je jednostavan") */
+  .section-glass {
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 0%, rgba(217,154,58,0.10) 0%, rgba(217,154,58,0) 60%),
+      linear-gradient(180deg, rgba(10,10,10,0.82) 0%, rgba(4,4,4,0.86) 100%);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(217,154,58,0.32);
+    border-radius: 1.25rem;
+    box-shadow:
+      0 30px 80px rgba(0,0,0,0.55),
+      inset 0 1px 0 rgba(241,183,90,0.08);
+  }
+
+  /* CTA panel wrapper — keep panel off the mobile screen edge */
+  .cta-wrap { padding-inline: 16px; }
+  @media (min-width: 768px) { .cta-wrap { padding-inline: 24px; } }
+  .cta-panel-max { max-width: 980px; margin-inline: auto; }
+
+  @media (min-width: 1024px) {
+    .heading-hero { font-size: clamp(4.5rem, 5.8vw, 6rem); }
+  }
+
+  /* Premium response badge — replaces green */
+  .badge-premium {
+    background: linear-gradient(180deg, color-mix(in oklab, var(--color-bronze) 35%, var(--color-surface-2)) 0%, var(--color-surface-2) 100%);
+    border: 1px solid color-mix(in oklab, var(--color-primary) 55%, transparent);
+    box-shadow: 0 12px 36px -18px color-mix(in oklab, var(--color-primary) 55%, transparent), inset 0 1px 0 color-mix(in oklab, var(--color-gold-light) 22%, transparent);
+    border-radius: 1.25rem;
+  }
+
+  /* ---------- Reusable form classes (CF7-ready) ---------- */
+  .form-page-shell { display: block; }
+  .form-hero { position: relative; overflow: hidden; }
+  .form-layout { display: grid; gap: 2.5rem; }
+  .form-main-panel { /* alias for .panel */ }
+  .form-side-panel { /* alias for sidebar wrapper */ }
+  .form-section-title { font-family: var(--font-display); text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-primary); font-size: 0.8rem; margin-bottom: 0.5rem; }
+  .form-row { display: grid; gap: 0.75rem; }
+  .form-helper { color: var(--color-muted-foreground); font-size: 0.85rem; }
+  .form-select, .form-textarea { width: 100%; background: color-mix(in oklab, var(--color-background) 70%, black); border: 1px solid var(--color-border); border-radius: 0.6rem; padding: 0.85rem 1rem; color: var(--color-foreground); font-family: var(--font-body); font-size: 0.95rem; }
+  .form-radio-group { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+  .form-radio-option { display: inline-flex; align-items: center; gap: 0.5rem; }
+  .form-checkbox { width: 1rem; height: 1rem; accent-color: var(--color-primary); }
+  .form-error { color: var(--color-unavailable); font-size: 0.85rem; margin-top: 0.35rem; }
+  .form-required { color: var(--color-primary); }
+  .form-submit { width: 100%; }
+  .form-consent { display: flex; align-items: flex-start; gap: 0.75rem; }
+  .cf7-slot { display: contents; }
+  .cf7-ready { /* marker for forms whose styles must work for CF7 output */ }
+
+  /* ---------- Contact Form 7 selector parity ---------- */
+  /* These selectors style raw CF7 output to match the React form system. */
+  .wpcf7 { color: var(--color-foreground); font-family: var(--font-body); }
+  .wpcf7-form p { margin: 0 0 1rem 0; }
+  .wpcf7 label { display: block; font-family: var(--font-body); font-weight: 500; font-size: 0.95rem; color: var(--color-foreground); margin-bottom: 0.5rem; }
+  .wpcf7 input[type="text"],
+  .wpcf7 input[type="email"],
+  .wpcf7 input[type="tel"],
+  .wpcf7 input[type="date"],
+  .wpcf7 input[type="time"],
+  .wpcf7 input[type="number"],
+  .wpcf7 input[type="url"],
+  .wpcf7 select,
+  .wpcf7 textarea {
+    width: 100%;
+    background: color-mix(in oklab, var(--color-background) 70%, black);
+    border: 1px solid var(--color-border);
+    border-radius: 0.6rem;
+    padding: 0.85rem 1rem;
+    color: var(--color-foreground);
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    transition: border-color 0.2s ease;
+  }
+  .wpcf7 input:focus,
+  .wpcf7 select:focus,
+  .wpcf7 textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px color-mix(in oklab, var(--color-primary) 18%, transparent);
+  }
+  .wpcf7 textarea { min-height: 110px; resize: vertical; }
+  .wpcf7 input[type="radio"],
+  .wpcf7 input[type="checkbox"] { accent-color: var(--color-primary); margin-right: 0.5rem; }
+  .wpcf7-list-item { display: inline-flex; align-items: center; gap: 0.5rem; margin: 0 0.75rem 0.5rem 0 !important; }
+  .wpcf7-submit {
+    display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+    width: 100%;
+    padding: 0.9rem 1.5rem;
+    background: var(--color-primary);
+    color: var(--color-background);
+    border: 0; border-radius: 0.6rem;
+    font-family: var(--font-display); text-transform: uppercase; letter-spacing: 0.06em;
+    font-size: 0.9rem; cursor: pointer;
+    transition: filter 0.2s ease;
+  }
+  .wpcf7-submit:hover { filter: brightness(1.08); }
+  .wpcf7-not-valid-tip { color: var(--color-unavailable); font-size: 0.85rem; margin-top: 0.35rem; }
+  .wpcf7-response-output {
+    border: 1px solid var(--color-border);
+    border-radius: 0.6rem;
+    padding: 0.85rem 1rem;
+    margin-top: 1rem;
+    color: var(--color-foreground);
+    background: color-mix(in oklab, var(--color-background) 60%, black);
+  }
+  .wpcf7 form.invalid .wpcf7-response-output,
+  .wpcf7 form.unaccepted .wpcf7-response-output { border-color: var(--color-unavailable); }
+  .wpcf7 form.sent .wpcf7-response-output { border-color: var(--color-primary); }
+}
+
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: var(--color-background); }
+::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 8px; }

@@ -1,0 +1,20 @@
+/*
+Theme Name: Ivan Sedative Band
+Theme URI: https://ivansedativeband.com
+Author: Starter Studio
+Author URI: https://ivansedativeband.com
+Description: Custom React/Vite WordPress theme for Ivan Jovanović feat. Sedative Band. The theme acts as a thin SPA wrapper around the built React/Vite app and exposes a WordPress data bridge via window.IvanTheme.
+Version: 1.0.0
+Requires at least: 6.0
+Tested up to: 6.6
+Requires PHP: 7.4
+License: GPL-2.0-or-later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: ivan-sedative
+Tags: spa, react, vite, custom-menu, contact-form-7
+*/
+
+/* Visual styling is owned by the React/Vite build. This file exists only to
+   satisfy the WordPress theme header and provide a minimal admin/login surface. */
+
+body.wp-admin-bar #wpadminbar { z-index: 99999; }
