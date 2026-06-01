@@ -55,8 +55,7 @@ export const heroContent = {
 export const navItems = [
   { label: "POČETNA",            to: "/",                  icon: "home" },
   { label: "USLUGE",             to: "/usluge",            icon: "sparkles" },
-  { label: "NAČIN RADA",         to: "/repertoar#nacin-rada", icon: "workflow" },
-  { label: "REPERTOAR",          to: "/repertoar",         icon: "music" },
+  { label: "REPERTOAR I NAČIN RADA", to: "/repertoar",     icon: "music" },
   { label: "INSTAGRAM",          to: "/instagram",         icon: "instagram" },
   { label: "DOPUNSKI PROGRAMI",  to: "/dopunski-programi", icon: "plus" },
   { label: "KONTAKT",            to: "/kontakt",           icon: "mail" },
@@ -64,6 +63,15 @@ export const navItems = [
 
 export type NavItem = { label: string; to: string; icon: string };
 const FAQ_LABEL = "NAJČEŠĆA PITANJA I ODGOVORI";
+const footerNavItems = [
+  { label: "POČETNA",                to: "/",                  icon: "home" },
+  { label: "USLUGE",                 to: "/usluge",            icon: "sparkles" },
+  { label: "REPERTOAR I NAČIN RADA", to: "/repertoar",         icon: "music" },
+  { label: "INSTAGRAM",              to: "/instagram",         icon: "instagram" },
+  { label: "DOSTUPNI TERMINI",       to: "/dostupni-termini", icon: "calendar" },
+  { label: FAQ_LABEL,                to: "/faq",               icon: "help" },
+  { label: "KONTAKT",                to: "/kontakt",           icon: "mail" },
+] as const;
 
 /**
  * Effective primary nav: WordPress menu wins when present, else local fallback.
@@ -91,16 +99,22 @@ function mapWpMenu(items: WpMenuItem[] | null, fallback: ReadonlyArray<NavItem>)
       if (!path) return null;
       // strip trailing slash except root
       if (path !== "/" && path.endsWith("/")) path = path.slice(0, -1);
-      if (path === "/nacin-rada") path = "/repertoar#nacin-rada";
-      if (path === "/repertoar" && hash === "#nacin-rada") path += hash;
+      if (path === "/nacin-rada" || (path === "/repertoar" && hash === "#nacin-rada")) {
+        path = "/repertoar";
+      }
       const fallbackMatch = fallback.find((i) => i.to === path);
       return {
-        label: path === "/faq" ? FAQ_LABEL : m.label || fallbackMatch?.label || path,
+        label: path === "/faq"
+          ? FAQ_LABEL
+          : path === "/repertoar"
+            ? "REPERTOAR I NAČIN RADA"
+            : m.label || fallbackMatch?.label || path,
         to: path,
         icon: iconByPath[path] || fallbackMatch?.icon || "home",
       };
     })
-    .filter((x): x is NavItem => x !== null);
+    .filter((x): x is NavItem => x !== null)
+    .filter((item, index, items) => items.findIndex((candidate) => candidate.to === item.to) === index);
 }
 
 export function getNavItems(): NavItem[] {
@@ -108,7 +122,7 @@ export function getNavItems(): NavItem[] {
 }
 
 export function getFooterNavItems(): NavItem[] {
-  return mapWpMenu(getWpMenu("footer"), navItems).map((item) => ({
+  return mapWpMenu(getWpMenu("footer"), footerNavItems).map((item) => ({
     ...item,
     label: item.label.charAt(0).toLocaleUpperCase("sr-Latn")
       + item.label.slice(1).toLocaleLowerCase("sr-Latn"),

@@ -1,8 +1,8 @@
 /**
  * Dedicated WordPress build config.
  *
- * Bypasses @lovable.dev/vite-tanstack-config (which injects the TanStack Start
- * SSR client entry with document-level hydration). Builds a plain SPA
+ * Bypasses the TanStack Start development config, which injects the SSR client
+ * entry with document-level hydration. Builds a plain SPA
  * bundle that mounts into #root inside the WordPress theme shell.
  */
 import { defineConfig } from "vite";

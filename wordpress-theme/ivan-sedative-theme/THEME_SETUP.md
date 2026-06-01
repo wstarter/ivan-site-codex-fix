@@ -13,7 +13,7 @@ menus, settings, CF7, and asset enqueueing. React owns all rendering.
 
 ## 2. Build & ship the React app
 
-From the Lovable project root, the full WP build pipeline is one command:
+From the project root, the full WP build pipeline is one command:
 
     npm install
     npm run build:theme
