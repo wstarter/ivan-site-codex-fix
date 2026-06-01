@@ -23,8 +23,8 @@ export function Header() {
             <Link
               key={item.to}
               to={item.to}
-              className="text-nav text-muted-foreground hover:text-foreground transition-colors"
-              activeProps={{ className: "text-foreground" }}
+              className="desktop-nav-link text-nav transition-colors"
+              activeProps={{ className: "desktop-nav-link-active" }}
               activeOptions={{ exact: item.to === "/" }}
             >
               {item.label}

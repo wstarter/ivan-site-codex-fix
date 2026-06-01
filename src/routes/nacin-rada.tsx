@@ -53,7 +53,7 @@ function NacinRadaPage() {
         </section>
 
         <div className="grid sm:grid-cols-2 gap-3 mt-8 max-w-lg">
-          <CTALink to="/dostupni-termini" variant="primary" fullWidth><Calendar size={16} /> PROVERI TERMIN</CTALink>
+          <CTALink to="/dostupni-termini" variant="primary" fullWidth className="availability-cta"><Calendar size={16} /> PROVERI DOSTUPNE TERMINE</CTALink>
           <CTALink to="/upit/svadba" variant="outline" fullWidth><Send size={16} /> POŠALJI UPIT</CTALink>
         </div>
       </div>

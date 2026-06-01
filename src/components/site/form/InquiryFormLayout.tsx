@@ -35,7 +35,7 @@ export function InquiryFormLayout({
             <ArrowLeft size={14} /> NAZAD NA POČETNU
           </Link>
           <p className="text-eyebrow mb-4">UPIT</p>
-          <h1 className="text-h1 text-foreground">
+          <h1 className="form-page-title text-h1 text-foreground">
             {title}{accent && <> <span className="gold-text">{accent}</span></>}
           </h1>
           <p className="text-body text-muted-foreground mt-5 max-w-2xl">{intro}</p>

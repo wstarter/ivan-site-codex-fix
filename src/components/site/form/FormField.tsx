@@ -23,11 +23,11 @@ export function FormField({
       <div>
         <div className="flex items-center gap-2">
           <span className="md:hidden inline-flex w-7 h-7 rounded-full gold-border items-center justify-center text-[11px] gold-text font-semibold">{number ?? ""}</span>
-          <label className="text-body text-foreground font-medium">
+          <label className="form-field-label text-body text-foreground font-medium">
             {label} {required && <span className="text-primary">*</span>}
           </label>
         </div>
-        {hint && <p className="text-small text-muted-foreground mt-1">{hint}</p>}
+        {hint && <p className="form-field-hint text-small text-muted-foreground mt-1">{hint}</p>}
       </div>
       <div>
         {children}
