@@ -99,7 +99,11 @@ export function getNavItems(): NavItem[] {
 }
 
 export function getFooterNavItems(): NavItem[] {
-  return mapWpMenu(getWpMenu("footer"), navItems);
+  return mapWpMenu(getWpMenu("footer"), navItems).map((item) => ({
+    ...item,
+    label: item.label.charAt(0).toLocaleUpperCase("sr-Latn")
+      + item.label.slice(1).toLocaleLowerCase("sr-Latn"),
+  }));
 }
 
 export type EventTypeKey = "svadba" | "korporativna" | "klupska" | "rodjendan";

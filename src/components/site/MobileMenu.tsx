@@ -130,9 +130,9 @@ export function MobileMenu({ open, onClose }: { open: boolean; onClose: () => vo
                         <Icon size={18} strokeWidth={1.25} />
                       </span>
                       <span className="flex-1">
-                        <span className="text-card-title text-foreground block leading-none">{item.label}</span>
+                        <span className="menu-item-title text-card-title block">{item.label}</span>
                         {subtitle[item.to] && (
-                          <span className="text-small text-muted-foreground mt-1 block">{subtitle[item.to]}</span>
+                          <span className="menu-item-subtitle text-small text-muted-foreground mt-1 block">{subtitle[item.to]}</span>
                         )}
                       </span>
                       <ChevronRight size={16} className="icon-gold opacity-60 group-hover:opacity-100 transition-opacity" />
@@ -144,8 +144,8 @@ export function MobileMenu({ open, onClose }: { open: boolean; onClose: () => vo
           </div>
 
           <div className="grid gap-3 mt-6">
-            <CTALink to="/dostupni-termini" variant="primary" fullWidth onClick={onClose}>
-              <Calendar size={16} /> PROVERI TERMINE
+            <CTALink to="/dostupni-termini" variant="primary" fullWidth className="availability-cta" onClick={onClose}>
+              <Calendar size={16} /> PROVERI DOSTUPNE TERMINE
             </CTALink>
             <CTALink to="/upit/svadba" variant="outline" fullWidth onClick={onClose}>
               <Send size={16} /> POŠALJI UPIT

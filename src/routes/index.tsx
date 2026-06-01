@@ -117,10 +117,10 @@ function HomePage() {
       {/* FINAL CTA */}
       <section className="py-16 md:py-24 cta-wrap">
         <div className="cta-panel-max section-glass p-7 md:p-14 text-center">
-          <p className="text-signature gold-text">Imate datum?</p>
+          <p className="cta-eyebrow">Imate datum?</p>
           <h2 className="text-h2 mt-2">Prvi korak je <span className="gold-text">jednostavan</span>.</h2>
           <div className="grid sm:grid-cols-2 gap-3 max-w-lg mx-auto mt-7">
-            <CTALink to="/dostupni-termini" variant="primary" fullWidth><Calendar size={16} /> PROVERI TERMIN</CTALink>
+            <CTALink to="/dostupni-termini" variant="primary" fullWidth className="availability-cta"><Calendar size={16} /> PROVERI DOSTUPNE TERMINE</CTALink>
             <CTALink to="/upit/svadba" variant="outline" fullWidth><Send size={16} /> POŠALJI UPIT</CTALink>
           </div>
         </div>
@@ -149,9 +149,9 @@ function FaqPreview() {
 
 function Hero() {
   const h = heroContent;
-  const mobileMetrics = h.metrics.filter((m) => m.mobile);
+  const mobileMetrics = h.metrics;
   return (
-    <section className="hero-stage relative overflow-hidden border-b border-border">
+    <section className="hero-stage relative overflow-hidden">
       {/* Layer 1: unified cinematic background */}
       <div className="hero-bg" aria-hidden />
 
@@ -168,8 +168,7 @@ function Hero() {
       <div className="hero-readability" aria-hidden />
 
       <div
-        className="container-site relative z-10 pb-10 lg:pt-28 lg:pb-16 min-h-[88vh] lg:min-h-[84vh] flex flex-col"
-        style={{ paddingTop: "clamp(220px, 36vh, 300px)" }}
+        className="hero-content container-site relative z-10 pb-10 lg:pb-16 min-h-[88vh] lg:min-h-[84vh] flex flex-col"
       >
         <div className="grid lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] gap-8 flex-1">
           {/* LEFT — text */}
@@ -193,12 +192,12 @@ function Hero() {
             {/* Slogan — two rows */}
             <div className="mt-5">
               <p className="hero-slogan">{h.slogan.line1}</p>
-              <p className="hero-slogan text-muted-foreground">{h.slogan.line2}</p>
+              <p className="hero-slogan">{h.slogan.line2}</p>
             </div>
 
             {/* CTAs */}
-            <div className="grid sm:grid-cols-2 gap-3 mt-5 max-w-lg">
-              <CTALink to={h.ctas.primary.to} variant="primary" fullWidth>
+            <div className="hero-cta-grid grid sm:grid-cols-2 gap-3 mt-5">
+              <CTALink to={h.ctas.primary.to} variant="primary" fullWidth className="hero-cta-primary availability-cta">
                 <Calendar size={16} /> {h.ctas.primary.label}
               </CTALink>
               <CTALink to={h.ctas.secondary.to} variant="outline" fullWidth>
@@ -216,16 +215,15 @@ function Hero() {
           <div className="hidden lg:block" />
         </div>
 
-        {/* METRICS — mobile: 3, desktop: 4 */}
-        <div className="relative z-10 mt-8 lg:mt-12 pt-5 lg:pt-6 border-t" style={{ borderColor: "var(--color-border-gold)" }}>
-          <div className="grid grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6 lg:gap-8">
+        {/* METRICS — all 4 metrics remain visible across breakpoints */}
+        <div className="hero-metrics-panel relative z-10 mt-6 lg:mt-10">
+          <div className="hero-metrics-grid grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
             {h.metrics.map((m, i) => {
               const Icon = metricIcons[m.icon] ?? Music2;
-              const hideOnMobile = !m.mobile;
               return (
                 <div
                   key={i}
-                  className={`flex flex-col items-center text-center gap-2 lg:flex-row lg:items-start lg:text-left lg:gap-3 min-w-0 ${hideOnMobile ? "hidden lg:flex" : ""}`}
+                  className="hero-metric-item flex flex-col items-center text-center min-w-0"
                 >
                   <Icon size={28} strokeWidth={1.25} className="metric-icon-free shrink-0 lg:mt-1" />
                   <div className="min-w-0">
@@ -236,7 +234,7 @@ function Hero() {
               );
             })}
           </div>
-          {/* Mobile sanity: ensure exactly 3 visible — done via .mobile flag */}
+          {/* Mobile sanity: all metrics stay present in the lightweight grid. */}
           <p className="sr-only">{mobileMetrics.length} key metrics</p>
         </div>
       </div>
