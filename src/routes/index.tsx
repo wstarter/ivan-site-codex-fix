@@ -2,9 +2,10 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Calendar, Send, Play, Instagram, ChevronRight, Music2 } from "lucide-react";
 import { useState } from "react";
 import { CTALink } from "@/components/site/CTAButton";
+import { FaqAnswer } from "@/components/site/FaqAnswer";
 import { SectionWrapper } from "@/components/site/SectionWrapper";
 import { AvailabilityCalendar } from "@/components/site/AvailabilityCalendar";
-import { brand, eventTypes, workflowSteps, repertoireCategories, faqGroups, heroContent } from "@/lib/site-data";
+import { brand, eventTypes, workflowSteps, repertoireCategories, faqPreviewItems, heroContent } from "@/lib/site-data";
 import { programIcons, metricIcons } from "@/lib/icons";
 
 export const Route = createFileRoute("/")({
@@ -131,16 +132,16 @@ function HomePage() {
 
 function FaqPreview() {
   const [open, setOpen] = useState<number | null>(0);
-  const items = faqGroups[0].items.slice(0, 5);
+  const items = faqPreviewItems;
   return (
     <div className="space-y-2 premium-panel p-2 md:p-3">
       {items.map((item, i) => (
         <div key={i} className="p-4 md:p-5" style={i < items.length - 1 ? { borderBottom: "1px solid var(--color-border)" } : undefined}>
           <button className="w-full flex items-center justify-between gap-4 text-left" onClick={() => setOpen(open === i ? null : i)}>
-            <span className="text-body font-semibold text-foreground">{item.q}</span>
+            <span className="text-body font-semibold text-foreground">{item.question}</span>
             <ChevronRight size={16} className={`transition-transform ${open === i ? "rotate-90" : ""}`} />
           </button>
-          {open === i && <p className="text-body text-muted-foreground mt-3">{item.a}</p>}
+          {open === i && <FaqAnswer blocks={item.answer} className="mt-3" />}
         </div>
       ))}
     </div>
