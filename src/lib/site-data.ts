@@ -55,7 +55,7 @@ export const heroContent = {
 export const navItems = [
   { label: "POČETNA",            to: "/",                  icon: "home" },
   { label: "USLUGE",             to: "/usluge",            icon: "sparkles" },
-  { label: "NAČIN RADA",         to: "/nacin-rada",        icon: "workflow" },
+  { label: "NAČIN RADA",         to: "/repertoar#nacin-rada", icon: "workflow" },
   { label: "REPERTOAR",          to: "/repertoar",         icon: "music" },
   { label: "INSTAGRAM",          to: "/instagram",         icon: "instagram" },
   { label: "DOPUNSKI PROGRAMI",  to: "/dopunski-programi", icon: "plus" },
@@ -78,12 +78,21 @@ function mapWpMenu(items: WpMenuItem[] | null, fallback: ReadonlyArray<NavItem>)
     .map<NavItem | null>((m) => {
       const url = m.url || "";
       let path = m.path || "";
+      let hash = "";
       if (!path) {
-        try { path = new URL(url, "http://x").pathname; } catch { path = url; }
+        try {
+          const parsedUrl = new URL(url, "http://x");
+          path = parsedUrl.pathname;
+          hash = parsedUrl.hash;
+        } catch { path = url; }
+      } else {
+        try { hash = new URL(url, "http://x").hash; } catch { /* keep path */ }
       }
       if (!path) return null;
       // strip trailing slash except root
       if (path !== "/" && path.endsWith("/")) path = path.slice(0, -1);
+      if (path === "/nacin-rada") path = "/repertoar#nacin-rada";
+      if (path === "/repertoar" && hash === "#nacin-rada") path += hash;
       const fallbackMatch = fallback.find((i) => i.to === path);
       return {
         label: path === "/faq" ? FAQ_LABEL : m.label || fallbackMatch?.label || path,
@@ -130,17 +139,6 @@ export const workflowSteps = [
   { n: "03", title: "Pošaljite upit",             desc: "Popunite kratak formular sa detaljima događaja." },
   { n: "04", title: "Odgovor u roku od 24h",      desc: "Svakom upitu pristupamo lično i preuzimamo dalju komunikaciju do potvrde termina." },
   { n: "05", title: "Potvrda termina",            desc: "Termin se potvrđuje nakon dogovora, avansa i ugovora." },
-];
-
-export const repertoireCategories = [
-  { key: "domace",     title: "Domaće",          desc: "Najbolje domaće hitove svih generacija." },
-  { key: "strano",     title: "Strano",          desc: "Pop, dance, soul, evergreen klasici." },
-  { key: "90te",       title: "90-te",           desc: "Hitovi devedesetih za nezaboravnu energiju." },
-  { key: "narodno",    title: "Narodno",         desc: "Narodna muzika za pravi provod." },
-  { key: "kola",       title: "Kola",            desc: "Tradicionalna kola za ples i veselje." },
-  { key: "club",       title: "Club / House",    desc: "Energy set za kasniji deo večeri." },
-  { key: "prviples",   title: "Prvi ples",       desc: "Pažljivo odabrana romantična izvođenja." },
-  { key: "specijalno", title: "Posebni zahtevi", desc: "Lista pesama biće dodata nakon dostavljanja repertoara." },
 ];
 
 export const additionalPrograms = [

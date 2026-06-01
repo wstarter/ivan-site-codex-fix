@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'IVAN_THEME_VERSION', '1.0.15' );
+define( 'IVAN_THEME_VERSION', '1.0.17' );
 define( 'IVAN_THEME_DIR', trailingslashit( get_template_directory() ) );
 define( 'IVAN_THEME_URI', trailingslashit( get_template_directory_uri() ) );
 define( 'IVAN_APP_DIR', IVAN_THEME_DIR . 'assets/app/' );

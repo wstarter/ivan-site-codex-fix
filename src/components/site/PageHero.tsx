@@ -19,7 +19,7 @@ export function PageHero({
   eyebrow?: string;
   title: string;
   accent?: string;
-  intro?: string;
+  intro?: string | readonly string[];
   image: string;
   children?: ReactNode;
   height?: string;
@@ -37,7 +37,13 @@ export function PageHero({
           {title}
           {accent && <> <span className="gold-text">{accent}</span></>}
         </h1>
-        {intro && <p className="text-body text-muted-foreground mt-5 max-w-2xl">{intro}</p>}
+        {typeof intro === "string" ? (
+          <p className="text-body text-muted-foreground mt-5 max-w-2xl">{intro}</p>
+        ) : intro && (
+          <div className="text-body text-muted-foreground mt-5 max-w-2xl space-y-3">
+            {intro.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+          </div>
+        )}
         {children && <div className="mt-7">{children}</div>}
       </div>
     </section>

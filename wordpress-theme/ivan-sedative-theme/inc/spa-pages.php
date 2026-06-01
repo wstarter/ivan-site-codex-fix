@@ -67,7 +67,7 @@ function ivan_create_default_primary_menu() {
 		$items = array(
 			array( 'Početna',          '/' ),
 			array( 'Usluge',           '/usluge' ),
-			array( 'Način rada',       '/nacin-rada' ),
+			array( 'Način rada',       '/repertoar#nacin-rada' ),
 			array( 'Repertoar',        '/repertoar' ),
 			array( 'Instagram',        '/instagram' ),
 			array( 'Dostupni termini', '/dostupni-termini' ),

@@ -5,7 +5,8 @@ import { CTALink } from "@/components/site/CTAButton";
 import { FaqAnswer } from "@/components/site/FaqAnswer";
 import { SectionWrapper } from "@/components/site/SectionWrapper";
 import { AvailabilityCalendar } from "@/components/site/AvailabilityCalendar";
-import { brand, eventTypes, workflowSteps, repertoireCategories, faqPreviewItems, heroContent } from "@/lib/site-data";
+import { brand, eventTypes, workflowSteps, faqPreviewItems, heroContent } from "@/lib/site-data";
+import { repertoireSections } from "@/lib/repertoire-data";
 import { programIcons, metricIcons } from "@/lib/icons";
 
 export const Route = createFileRoute("/")({
@@ -79,10 +80,10 @@ function HomePage() {
       {/* REPERTOIRE PREVIEW */}
       <SectionWrapper eyebrow="REPERTOAR" title="Pesme i žanrovi">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-          {repertoireCategories.slice(0, 8).map((c) => (
+          {repertoireSections.map((c) => (
             <Link to="/repertoar" key={c.key} className="premium-card premium-card-compact text-center items-center">
               <p className="text-card-title text-foreground">{c.title}</p>
-              <p className="text-small card-meta mt-2 line-clamp-2">{c.desc}</p>
+              <p className="text-small card-meta mt-2 line-clamp-2">{c.preview}</p>
             </Link>
           ))}
         </div>
