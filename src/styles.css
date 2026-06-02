@@ -597,20 +597,23 @@
   .cf7-ready { /* marker for forms whose styles must work for CF7 output */ }
 
   /* ---------- Contact Form 7 selector parity ---------- */
-  /* These selectors style raw CF7 output to match the React form system. */
-  .wpcf7 { color: var(--color-foreground); font-family: var(--font-body); }
-  .wpcf7-form p { margin: 0 0 1rem 0; }
-  .wpcf7 label { display: block; font-family: var(--font-body); font-weight: 500; font-size: 0.95rem; color: var(--color-foreground); margin-bottom: 0.5rem; }
-  .wpcf7 input[type="text"],
-  .wpcf7 input[type="email"],
-  .wpcf7 input[type="tel"],
-  .wpcf7 input[type="date"],
-  .wpcf7 input[type="time"],
-  .wpcf7 input[type="number"],
-  .wpcf7 input[type="url"],
-  .wpcf7 select,
-  .wpcf7 textarea {
+  /* Keep raw CF7 defaults inside the inquiry slot; other site forms stay untouched. */
+  .wpcf7-host .wpcf7,
+  .wpcf7-host .wpcf7 form { width: 100%; max-width: 100%; min-width: 0; color: var(--color-foreground); font-family: var(--font-body); }
+  .wpcf7-host .wpcf7-form p { margin: 0 0 1rem 0; }
+  .wpcf7-host .wpcf7 label { display: block; font-family: var(--font-body); font-weight: 500; font-size: 0.95rem; line-height: 1.45; color: var(--color-foreground); margin-bottom: 0.5rem; }
+  .wpcf7-host .wpcf7 input[type="text"],
+  .wpcf7-host .wpcf7 input[type="email"],
+  .wpcf7-host .wpcf7 input[type="tel"],
+  .wpcf7-host .wpcf7 input[type="date"],
+  .wpcf7-host .wpcf7 input[type="time"],
+  .wpcf7-host .wpcf7 input[type="number"],
+  .wpcf7-host .wpcf7 input[type="url"],
+  .wpcf7-host .wpcf7 select,
+  .wpcf7-host .wpcf7 textarea {
     width: 100%;
+    max-width: 100%;
+    min-width: 0;
     background: color-mix(in oklab, var(--color-background) 70%, black);
     border: 1px solid var(--color-border);
     border-radius: 0.6rem;
@@ -618,43 +621,121 @@
     color: var(--color-foreground);
     font-family: var(--font-body);
     font-size: 0.95rem;
-    transition: border-color 0.2s ease;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
   }
-  .wpcf7 input:focus,
-  .wpcf7 select:focus,
-  .wpcf7 textarea:focus {
+  .wpcf7-host .wpcf7 input::placeholder,
+  .wpcf7-host .wpcf7 textarea::placeholder { color: color-mix(in oklab, var(--color-muted-foreground) 70%, transparent); }
+  .wpcf7-host .wpcf7 input:focus,
+  .wpcf7-host .wpcf7 select:focus,
+  .wpcf7-host .wpcf7 textarea:focus {
     outline: none;
     border-color: var(--color-primary);
     box-shadow: 0 0 0 3px color-mix(in oklab, var(--color-primary) 18%, transparent);
   }
-  .wpcf7 textarea { min-height: 110px; resize: vertical; }
-  .wpcf7 input[type="radio"],
-  .wpcf7 input[type="checkbox"] { accent-color: var(--color-primary); margin-right: 0.5rem; }
-  .wpcf7-list-item { display: inline-flex; align-items: center; gap: 0.5rem; margin: 0 0.75rem 0.5rem 0 !important; }
-  .wpcf7-submit {
+  .wpcf7-host .wpcf7 textarea { min-height: 110px; resize: vertical; }
+  .wpcf7-host .wpcf7 input[type="range"] { width: 100%; max-width: 100%; accent-color: var(--color-primary); cursor: pointer; }
+  .wpcf7-host .wpcf7 input[type="radio"],
+  .wpcf7-host .wpcf7 input[type="checkbox"] { width: 1rem; height: 1rem; flex: 0 0 auto; accent-color: var(--color-primary); }
+  .wpcf7-host .wpcf7-list-item { display: inline-flex; align-items: center; gap: 0.45rem; max-width: 100%; margin: 0 0.75rem 0.5rem 0 !important; color: var(--color-muted-foreground); }
+  .wpcf7-host .wpcf7-checkbox,
+  .wpcf7-host .wpcf7-acceptance { display: flex; flex-wrap: wrap; gap: 0.35rem 0.75rem; max-width: 100%; }
+  .wpcf7-host .wpcf7-acceptance .wpcf7-list-item { align-items: flex-start; }
+  .wpcf7-host .wpcf7-submit,
+  .wpcf7-host .ivan-cf7-submit {
     display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
     width: 100%;
+    min-height: 48px;
     padding: 0.9rem 1.5rem;
-    background: var(--color-primary);
-    color: var(--color-background);
-    border: 0; border-radius: 0.6rem;
+    background: linear-gradient(180deg, var(--color-gold-light), var(--color-primary) 60%, var(--color-gold-muted));
+    color: var(--color-primary-foreground);
+    border: 0; border-radius: 0.85rem;
+    box-shadow: 0 10px 28px -14px color-mix(in oklab, var(--color-primary) 70%, transparent);
     font-family: var(--font-body); font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;
     font-size: 0.9rem; cursor: pointer;
     transition: filter 0.2s ease;
   }
-  .wpcf7-submit:hover { filter: brightness(1.08); }
-  .wpcf7-not-valid-tip { color: var(--color-unavailable); font-size: 0.85rem; margin-top: 0.35rem; }
-  .wpcf7-response-output {
+  .wpcf7-host .wpcf7-submit:hover,
+  .wpcf7-host .ivan-cf7-submit:hover { filter: brightness(1.08); }
+  .wpcf7-host .wpcf7-not-valid-tip { color: var(--color-unavailable); font-size: 0.85rem; line-height: 1.45; margin-top: 0.35rem; }
+  .wpcf7-host .wpcf7-response-output {
     border: 1px solid var(--color-border);
     border-radius: 0.6rem;
     padding: 0.85rem 1rem;
-    margin-top: 1rem;
+    margin: 1rem 0 0;
     color: var(--color-foreground);
     background: color-mix(in oklab, var(--color-background) 60%, black);
   }
-  .wpcf7 form.invalid .wpcf7-response-output,
-  .wpcf7 form.unaccepted .wpcf7-response-output { border-color: var(--color-unavailable); }
-  .wpcf7 form.sent .wpcf7-response-output { border-color: var(--color-primary); }
+  .wpcf7-host .wpcf7 form.invalid .wpcf7-response-output,
+  .wpcf7-host .wpcf7 form.unaccepted .wpcf7-response-output { border-color: var(--color-unavailable); }
+  .wpcf7-host .wpcf7 form.sent .wpcf7-response-output { border-color: var(--color-primary); }
+  .wpcf7-host .wpcf7-spinner { margin: 0.75rem auto 0; background-color: color-mix(in oklab, var(--color-primary) 45%, var(--color-surface-2)); }
+
+  /* Premium CF7 Form-tab class system. */
+  .wpcf7-host .ivan-cf7 { display: flex; flex-direction: column; gap: 1.5rem; width: 100%; max-width: 100%; min-width: 0; }
+  .wpcf7-host .ivan-cf7-section { border-bottom: 1px solid var(--color-border); padding-bottom: 0.5rem; }
+  .wpcf7-host .ivan-cf7-section:last-child { border-bottom: 0; }
+  .wpcf7-host .ivan-cf7-section-title {
+    margin: 0 0 0.5rem;
+    color: var(--color-primary);
+    font-family: var(--font-display);
+    font-size: 0.8rem;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .wpcf7-host .ivan-cf7-row {
+    display: grid;
+    grid-template-columns: 2.25rem minmax(0, 1fr) minmax(0, 1.4fr);
+    gap: 0.75rem 1.25rem;
+    align-items: start;
+    padding: 0.75rem 0;
+  }
+  .wpcf7-host .ivan-cf7-step {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border: 1px solid color-mix(in oklab, var(--color-primary) 45%, transparent);
+    border-radius: 999px;
+    color: var(--color-primary);
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+  .wpcf7-host .ivan-cf7-copy,
+  .wpcf7-host .ivan-cf7-field { min-width: 0; }
+  .wpcf7-host .ivan-cf7-label { display: block; color: var(--color-foreground); font-size: 0.95rem; font-weight: 500; line-height: 1.45; }
+  .wpcf7-host .ivan-cf7-help,
+  .wpcf7-host .ivan-cf7-note { color: var(--color-muted-foreground); font-size: 0.85rem; line-height: 1.45; }
+  .wpcf7-host .ivan-cf7-help { margin-top: 0.25rem; }
+  .wpcf7-host .ivan-cf7-field > .wpcf7-form-control-wrap { display: block; min-width: 0; }
+  .wpcf7-host .ivan-cf7-options .wpcf7-form-control { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .wpcf7-host .ivan-cf7-options .wpcf7-list-item {
+    min-height: 44px;
+    margin: 0 !important;
+    padding: 0.6rem 0.85rem;
+    border: 1px solid var(--color-border);
+    border-radius: 0.85rem;
+    background: transparent;
+  }
+  .wpcf7-host .ivan-cf7-options .wpcf7-list-item:has(input:checked) {
+    border-color: var(--color-primary);
+    background: color-mix(in oklab, var(--color-primary) 15%, transparent);
+    color: var(--color-primary);
+  }
+  .wpcf7-host .ivan-cf7-consent { padding-top: 0.25rem; }
+  .wpcf7-host .ivan-cf7-consent .wpcf7-list-item { margin-right: 0 !important; }
+  .wpcf7-host .ivan-cf7-note { margin: 0; text-align: center; }
+  .wpcf7-host .ivan-honeypot { display: none !important; }
+
+  @media (max-width: 767px) {
+    .wpcf7-host .ivan-cf7-row { grid-template-columns: 1.75rem minmax(0, 1fr); gap: 0.45rem 0.75rem; }
+    .wpcf7-host .ivan-cf7-step { width: 1.75rem; height: 1.75rem; font-size: 0.68rem; }
+    .wpcf7-host .ivan-cf7-field { grid-column: 1 / -1; }
+    .wpcf7-host .ivan-cf7-label { font-size: 0.875rem; line-height: 1.4; }
+    .wpcf7-host .ivan-cf7-help,
+    .wpcf7-host .ivan-cf7-note { font-size: 0.76rem; }
+  }
 }
 
 ::-webkit-scrollbar { width: 8px; height: 8px; }
