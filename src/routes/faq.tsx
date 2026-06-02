@@ -4,8 +4,8 @@ import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { FaqAnswer } from "@/components/site/FaqAnswer";
 import { PageHero } from "@/components/site/PageHero";
-import { visualAssets } from "@/lib/assets";
-const hero = visualAssets.faqHero;
+import { getPageHeroAsset } from "@/lib/page-hero-assets";
+const hero = getPageHeroAsset("/faq");
 
 export const Route = createFileRoute("/faq")({
   head: () => ({

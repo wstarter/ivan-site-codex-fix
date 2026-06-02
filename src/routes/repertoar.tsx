@@ -4,8 +4,8 @@ import { workflowSteps } from "@/lib/site-data";
 import { CTALink } from "@/components/site/CTAButton";
 import { Calendar, Send, Music2 } from "lucide-react";
 import { PageHero } from "@/components/site/PageHero";
-import { visualAssets } from "@/lib/assets";
-const hero = visualAssets.repertoireHero;
+import { getPageHeroAsset } from "@/lib/page-hero-assets";
+const hero = getPageHeroAsset("/repertoar");
 
 export const Route = createFileRoute("/repertoar")({
   head: () => ({

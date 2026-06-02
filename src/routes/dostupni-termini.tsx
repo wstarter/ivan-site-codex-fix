@@ -3,8 +3,8 @@ import { AvailabilityCalendar } from "@/components/site/AvailabilityCalendar";
 import { CTALink } from "@/components/site/CTAButton";
 import { Send } from "lucide-react";
 import { PageHero } from "@/components/site/PageHero";
-import { visualAssets } from "@/lib/assets";
-const hero = visualAssets.calendarHero;
+import { getPageHeroAsset } from "@/lib/page-hero-assets";
+const hero = getPageHeroAsset("/dostupni-termini");
 
 export const Route = createFileRoute("/dostupni-termini")({
   head: () => ({

@@ -11,10 +11,10 @@ import { ConsentField } from "@/components/site/form/ConsentField";
 import { useInquiryForm, required, emailValid } from "@/components/site/form/useInquiryForm";
 import { CTAButton } from "@/components/site/CTAButton";
 import { Cf7FormSlot } from "@/components/site/form/Cf7FormSlot";
-import { visualAssets } from "@/lib/assets";
+import { getPageHeroAsset } from "@/lib/page-hero-assets";
 import { budgetConfig } from "@/lib/forms-config";
 import { unlockBodyInteraction } from "@/lib/interaction-safety";
-const hero = visualAssets.formCorporateHero;
+const hero = getPageHeroAsset("/upit/korporativna-proslava");
 
 export const Route = createFileRoute("/upit/korporativna-proslava")({
   head: () => ({ meta: [{ title: "Upit za korporativnu proslavu — Ivan Jovanović" }, { name: "description", content: "Pošaljite upit za muzički program za korporativni event." }] }),

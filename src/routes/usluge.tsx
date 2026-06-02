@@ -3,8 +3,8 @@ import { ChevronRight, Music2, Plus } from "lucide-react";
 import { eventTypes } from "@/lib/site-data";
 import { programIcons } from "@/lib/icons";
 import { PageHero } from "@/components/site/PageHero";
-import { visualAssets } from "@/lib/assets";
-const hero = visualAssets.uslugeHero;
+import { getPageHeroAsset } from "@/lib/page-hero-assets";
+const hero = getPageHeroAsset("/usluge");
 
 export const Route = createFileRoute("/usluge")({
   head: () => ({

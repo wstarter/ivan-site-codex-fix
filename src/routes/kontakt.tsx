@@ -3,8 +3,8 @@ import { Mail, Phone, Instagram, Calendar, Send } from "lucide-react";
 import { brand } from "@/lib/site-data";
 import { CTALink } from "@/components/site/CTAButton";
 import { PageHero } from "@/components/site/PageHero";
-import { visualAssets } from "@/lib/assets";
-const hero = visualAssets.contactHero;
+import { getPageHeroAsset } from "@/lib/page-hero-assets";
+const hero = getPageHeroAsset("/kontakt");
 
 export const Route = createFileRoute("/kontakt")({
   head: () => ({

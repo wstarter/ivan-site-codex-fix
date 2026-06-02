@@ -3,8 +3,8 @@ import { Instagram, Play } from "lucide-react";
 import { brand } from "@/lib/site-data";
 import { CTALink } from "@/components/site/CTAButton";
 import { PageHero } from "@/components/site/PageHero";
-import { visualAssets } from "@/lib/assets";
-const hero = visualAssets.mediaHero;
+import { getPageHeroAsset } from "@/lib/page-hero-assets";
+const hero = getPageHeroAsset("/instagram");
 
 export const Route = createFileRoute("/instagram")({
   head: () => ({

@@ -3,8 +3,8 @@ import { additionalPrograms } from "@/lib/site-data";
 import { CTALink } from "@/components/site/CTAButton";
 import { Music2, Send } from "lucide-react";
 import { PageHero } from "@/components/site/PageHero";
-import { visualAssets } from "@/lib/assets";
-const hero = visualAssets.additionalProgramsHero;
+import { getPageHeroAsset } from "@/lib/page-hero-assets";
+const hero = getPageHeroAsset("/dopunski-programi");
 
 export const Route = createFileRoute("/dopunski-programi")({
   head: () => ({

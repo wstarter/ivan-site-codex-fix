@@ -4,8 +4,8 @@ import { useEffect } from "react";
 import { CTALink } from "@/components/site/CTAButton";
 import { trackLeadEventPlaceholder } from "@/lib/lead";
 import { brand } from "@/lib/site-data";
-import { visualAssets } from "@/lib/assets";
-const hero = visualAssets.thankYouHero;
+import { getPageHeroAsset } from "@/lib/page-hero-assets";
+const hero = getPageHeroAsset("/hvala");
 
 export const Route = createFileRoute("/hvala")({
   head: () => ({
