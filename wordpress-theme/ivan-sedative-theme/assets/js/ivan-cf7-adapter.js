@@ -6,6 +6,9 @@
 
   var MODAL_CLASS = "ivan-cf7-modal-open";
   var ERROR_CLASS = "ivan-cf7-invalid";
+  var RANGE_MIN = 500;
+  var RANGE_MAX = 50000;
+  var RANGE_STEP = 500;
   var messages = {
     required: "Ovo polje je obavezno.",
     consent: "Potrebno je da potvrdite saglasnost pre slanja upita.",
@@ -30,8 +33,6 @@
     "One or more fields have an error. Please check and try again.": messages.invalid,
     "There was an error trying to send your message. Please try again later.": messages.failed,
     "There was an error trying to send your message. Please try again later or contact the administrator by another method.": messages.failed,
-    "There was an error trying to send your message. Please try again later.": messages.failed,
-    "There was an error trying to send your message. Please try again later or contact the administrator by another method.": messages.failed,
   };
 
   function getInquiryForm(node) {
@@ -45,8 +46,7 @@
   }
 
   function unlockBody() {
-    var elements = [document.body, document.documentElement];
-    elements.forEach(function (element) {
+    [document.body, document.documentElement].forEach(function (element) {
       if (!element) return;
       element.style.overflow = "";
       element.style.overflowX = "";
@@ -62,8 +62,21 @@
     unlockBody();
   }
 
+  function dispatchSuccess(form) {
+    try {
+      var event = new CustomEvent("ivan:cf7-success", {
+        cancelable: true,
+        detail: { form: form },
+      });
+      return !window.dispatchEvent(event);
+    } catch (error) {
+      return false;
+    }
+  }
+
   function showSuccessModal(form) {
     closeSuccessModal();
+    if (dispatchSuccess(form)) return;
 
     var modal = document.createElement("div");
     modal.className = "ivan-cf7-success-modal";
@@ -74,13 +87,14 @@
       '<div class="ivan-cf7-success-modal__backdrop" data-ivan-cf7-close></div>' +
       '<section class="ivan-cf7-success-modal__panel">' +
         '<button class="ivan-cf7-success-modal__close" type="button" aria-label="Zatvori" data-ivan-cf7-close>&times;</button>' +
-        '<p class="ivan-cf7-success-modal__eyebrow">LIVE MUSIC EXPERIENCE</p>' +
+        '<p class="ivan-cf7-success-modal__eyebrow">SEDATIVE BAND</p>' +
         '<h2 class="ivan-cf7-success-modal__title" id="ivan-cf7-success-title">UPIT JE USPEŠNO POSLAT</h2>' +
         '<p class="ivan-cf7-success-modal__copy">' + messages.sent + '</p>' +
         '<p class="ivan-cf7-success-modal__info">Slanje upita ne znači automatsku rezervaciju termina. Termin se potvrđuje tek nakon dogovora, avansa i ugovora.</p>' +
         '<div class="ivan-cf7-success-modal__actions">' +
-          '<button class="ivan-cf7-success-modal__action" type="button" data-ivan-cf7-close>ZATVORI</button>' +
-          '<a class="ivan-cf7-success-modal__action ivan-cf7-success-modal__action--primary" href="/hvala">DETALJI POTVRDE</a>' +
+          '<a class="ivan-cf7-success-modal__action" href="/">POČETNA</a>' +
+          '<a class="ivan-cf7-success-modal__action" href="/instagram">INSTAGRAM</a>' +
+          '<a class="ivan-cf7-success-modal__action ivan-cf7-success-modal__action--primary" href="/dostupni-termini">TERMINI</a>' +
         '</div>' +
       '</section>';
 
@@ -94,10 +108,6 @@
 
     var closeButton = modal.querySelector(".ivan-cf7-success-modal__close");
     if (closeButton) closeButton.focus();
-
-    try {
-      window.dispatchEvent(new CustomEvent("ivan:cf7-success", { detail: { form: form } }));
-    } catch (error) {}
   }
 
   function getFieldWrap(input) {
@@ -109,8 +119,9 @@
     if (!wrap) return;
     input.classList.remove(ERROR_CLASS);
     input.removeAttribute("aria-invalid");
-    var customError = wrap.querySelector(".ivan-cf7-inline-error");
-    if (customError) customError.remove();
+    wrap.querySelectorAll(".ivan-cf7-inline-error").forEach(function (error) {
+      error.remove();
+    });
   }
 
   function setInlineError(input, message) {
@@ -127,6 +138,54 @@
     return false;
   }
 
+  function clearConsentError(form) {
+    var consent = form.querySelector(".ivan-cf7-consent");
+    if (!consent) return;
+    consent.classList.remove(ERROR_CLASS);
+    consent.querySelectorAll(".ivan-cf7-consent-error").forEach(function (error) {
+      error.remove();
+    });
+    var input = consent.querySelector("input[type=checkbox]");
+    if (input) clearInlineError(input);
+  }
+
+  function setConsentError(form) {
+    var consent = form.querySelector(".ivan-cf7-consent");
+    if (!consent) return false;
+    clearConsentError(form);
+    consent.classList.add(ERROR_CLASS);
+    var error = document.createElement("span");
+    error.className = "ivan-cf7-consent-error";
+    error.textContent = messages.consent;
+    consent.appendChild(error);
+    return false;
+  }
+
+  function clearGroupError(group) {
+    group.classList.remove(ERROR_CLASS);
+    group.removeAttribute("aria-invalid");
+    group.querySelectorAll(".ivan-cf7-inline-error").forEach(function (error) {
+      error.remove();
+    });
+  }
+
+  function setGroupError(group, message) {
+    clearGroupError(group);
+    group.classList.add(ERROR_CLASS);
+    group.setAttribute("aria-invalid", "true");
+    var error = document.createElement("span");
+    error.className = "ivan-cf7-inline-error";
+    error.textContent = message;
+    group.appendChild(error);
+    return false;
+  }
+
+  function isRequired(input) {
+    return input.required ||
+      input.getAttribute("aria-required") === "true" ||
+      input.classList.contains("wpcf7-validates-as-required");
+  }
+
   function parseDate(value) {
     var match = String(value || "").trim().match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
     if (!match) return null;
@@ -139,12 +198,27 @@
     return date;
   }
 
+  function maskDateValue(value) {
+    var digits = String(value || "").replace(/\D/g, "").slice(0, 8);
+    if (digits.length <= 2) return digits;
+    if (digits.length <= 4) return digits.slice(0, 2) + "/" + digits.slice(2);
+    return digits.slice(0, 2) + "/" + digits.slice(2, 4) + "/" + digits.slice(4);
+  }
+
   function validateRequired(input, report) {
-    if (!input.required || String(input.value || "").trim()) {
+    if (!isRequired(input) || String(input.value || "").trim()) {
       clearInlineError(input);
       return true;
     }
     return report ? setInlineError(input, messages.required) : false;
+  }
+
+  function validateBasicRequired(input, report) {
+    if (!isRequired(input) || !input.matches("input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=submit]), textarea, select")) {
+      return true;
+    }
+    if (input.matches('[name="your-email"], [name="your-phone"], .ivan-cf7-date')) return true;
+    return validateRequired(input, report);
   }
 
   function validateEmail(input, report) {
@@ -185,17 +259,36 @@
   function validateConsent(form, report) {
     var input = form.querySelector(".ivan-cf7-consent input[type=checkbox], input[name=consent][type=checkbox], input[name=acceptance][type=checkbox]");
     if (!input || input.checked) {
-      if (input) clearInlineError(input);
+      clearConsentError(form);
       return true;
     }
-    return report ? setInlineError(input, messages.consent) : false;
+    return report ? setConsentError(form) : false;
+  }
+
+  function validateRequiredRadios(form, report) {
+    var valid = true;
+    form.querySelectorAll(".ivan-cf7-required-radio").forEach(function (group) {
+      if (group.querySelector("input[type=radio]:checked, input[type=checkbox]:checked")) {
+        clearGroupError(group);
+      } else {
+        valid = false;
+        if (report) setGroupError(group, messages.required);
+      }
+    });
+    return valid;
   }
 
   function validateForm(form, report) {
     var valid = true;
-    var required = form.querySelectorAll(".ivan-cf7 input[required], .ivan-cf7 textarea[required], .ivan-cf7 select[required]");
+    var required = form.querySelectorAll(
+      ".ivan-cf7 input[required], .ivan-cf7 textarea[required], .ivan-cf7 select[required], " +
+      ".ivan-cf7 input[aria-required=true], .ivan-cf7 textarea[aria-required=true], .ivan-cf7 select[aria-required=true], " +
+      ".ivan-cf7 input.wpcf7-validates-as-required, .ivan-cf7 textarea.wpcf7-validates-as-required, .ivan-cf7 select.wpcf7-validates-as-required"
+    );
     required.forEach(function (input) {
-      if (input.type !== "checkbox" && !validateRequired(input, report)) valid = false;
+      if (!input.matches("[type=checkbox], [type=radio], [type=submit], [type=range]") && !validateRequired(input, report)) {
+        valid = false;
+      }
     });
 
     var email = form.querySelector('[name="your-email"]');
@@ -205,19 +298,24 @@
     form.querySelectorAll(".ivan-cf7-date").forEach(function (input) {
       if (!validateDate(input, report)) valid = false;
     });
+    if (!validateRequiredRadios(form, report)) valid = false;
     if (!validateConsent(form, report)) valid = false;
 
     if (!valid && report) {
       var first = form.querySelector("." + ERROR_CLASS);
       if (first && first.focus) {
-        try { first.focus({ preventScroll: true }); } catch (error) { first.focus(); }
+        try {
+          first.focus({ preventScroll: true });
+        } catch (error) {
+          first.focus();
+        }
       }
     }
     return valid;
   }
 
   function translateText(root) {
-    if (!root) return;
+    if (!root || !root.querySelectorAll) return;
     root.querySelectorAll(".wpcf7-not-valid-tip, .wpcf7-response-output").forEach(function (node) {
       var text = node.textContent.trim();
       if (translations[text]) node.textContent = translations[text];
@@ -231,25 +329,75 @@
   }
 
   function normalizeSubmit(root) {
-    if (!root) return;
-    root.querySelectorAll(".ivan-cf7-submit").forEach(function (button) {
-      if (button.tagName === "INPUT") {
-        button.value = "POŠALJI UPIT";
-      } else {
-        button.textContent = "POŠALJI UPIT";
-      }
+    if (!root || !root.querySelectorAll) return;
+    root.querySelectorAll('.ivan-cf7-submit input[type="submit"], input.wpcf7-submit').forEach(function (input) {
+      input.value = "POŠALJI UPIT";
+    });
+    root.querySelectorAll(".ivan-cf7-submit svg, .ivan-cf7-submit .icon, .ivan-cf7-submit [data-icon]").forEach(function (icon) {
+      icon.remove();
     });
   }
 
+  function normalizeBudgetValue(value) {
+    var parsed = parseInt(value, 10);
+    if (!Number.isFinite(parsed)) parsed = RANGE_MIN;
+    return Math.min(RANGE_MAX, Math.max(RANGE_MIN, Math.round(parsed / RANGE_STEP) * RANGE_STEP));
+  }
+
+  function formatBudget(value) {
+    return normalizeBudgetValue(value).toLocaleString("sr-RS") + "€";
+  }
+
+  function updateBudgetRange(input) {
+    if (!input) return;
+    input.min = String(RANGE_MIN);
+    input.max = String(RANGE_MAX);
+    input.step = String(RANGE_STEP);
+    var value = normalizeBudgetValue(input.value);
+    input.value = String(value);
+    var progress = ((value - RANGE_MIN) / (RANGE_MAX - RANGE_MIN)) * 100;
+    input.style.setProperty("--ivan-range-progress", progress + "%");
+    var budget = input.closest(".ivan-cf7-budget") || input.parentElement;
+    if (!budget || !budget.querySelector) return;
+    var output = budget.querySelector("[data-budget-output], .ivan-cf7-budget-current");
+    if (output) output.textContent = formatBudget(value);
+  }
+
+  function initBudgetRanges(root) {
+    if (!root || !root.querySelectorAll) return;
+    root.querySelectorAll(
+      '.ivan-cf7-budget-range input[type="range"], input[type="range"].ivan-cf7-budget-range, input[type="range"][name="budget-range"]'
+    ).forEach(updateBudgetRange);
+  }
+
+  function updateRadioStates(root) {
+    if (!root || !root.querySelectorAll) return;
+    root.querySelectorAll(".ivan-cf7-options .wpcf7-list-item, .ivan-cf7-pills .wpcf7-list-item").forEach(function (item) {
+      item.classList.toggle("is-checked", !!item.querySelector("input:checked"));
+    });
+  }
+
+  function getHosts(root) {
+    var hosts = [];
+    if (root && root.matches && root.matches(".wpcf7-host")) hosts.push(root);
+    if (root && root.querySelectorAll) {
+      root.querySelectorAll(".wpcf7-host").forEach(function (host) {
+        if (hosts.indexOf(host) === -1) hosts.push(host);
+      });
+    }
+    return hosts;
+  }
+
   function prepare(root) {
-    var scope = root && root.querySelectorAll ? root : document;
-    scope.querySelectorAll(".wpcf7-host").forEach(function (host) {
+    getHosts(root || document).forEach(function (host) {
       if (!host.querySelector(".ivan-cf7")) return;
       host.querySelectorAll("form").forEach(function (form) {
         form.setAttribute("novalidate", "novalidate");
       });
       normalizeSubmit(host);
       translateText(host);
+      initBudgetRanges(host);
+      updateRadioStates(host);
     });
   }
 
@@ -270,13 +418,45 @@
     if (input.matches(".ivan-cf7-date")) validateDate(input, true);
   }, true);
 
+  document.addEventListener("input", function (event) {
+    var input = event.target;
+    var form = getInquiryForm(input);
+    if (!form || !input.matches) return;
+    if (input.matches(".ivan-cf7-date") && input.type !== "date") {
+      input.value = maskDateValue(input.value);
+    }
+    validateBasicRequired(input, true);
+    if (input.matches('.ivan-cf7-budget-range input[type="range"], input[type="range"].ivan-cf7-budget-range, input[type="range"][name="budget-range"]')) {
+      updateBudgetRange(input);
+    }
+  });
+
   document.addEventListener("change", function (event) {
     var input = event.target;
     var form = getInquiryForm(input);
     if (!form || !input.matches) return;
+    validateBasicRequired(input, true);
+    if (input.matches('.ivan-cf7-budget-range input[type="range"], input[type="range"].ivan-cf7-budget-range, input[type="range"][name="budget-range"]')) {
+      updateBudgetRange(input);
+    }
+    if (input.matches(".ivan-cf7-options input, .ivan-cf7-pills input")) {
+      updateRadioStates(form);
+      validateRequiredRadios(form, true);
+    }
     if (input.matches(".ivan-cf7-consent input[type=checkbox], input[name=consent][type=checkbox], input[name=acceptance][type=checkbox]")) {
       validateConsent(form, true);
     }
+  });
+
+  ["keyup", "pointerup"].forEach(function (eventName) {
+    document.addEventListener(eventName, function (event) {
+      var input = event.target;
+      var form = getInquiryForm(input);
+      if (!form || !input.matches) return;
+      if (input.matches('.ivan-cf7-budget-range input[type="range"], input[type="range"].ivan-cf7-budget-range, input[type="range"][name="budget-range"]')) {
+        updateBudgetRange(input);
+      }
+    });
   });
 
   document.addEventListener("click", function (event) {
@@ -302,6 +482,8 @@
       window.setTimeout(function () {
         translateText(form);
         normalizeSubmit(form);
+        initBudgetRanges(form);
+        updateRadioStates(form);
       }, 0);
     });
   });

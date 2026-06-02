@@ -2,11 +2,11 @@
 /**
  * Contact Form 7 bridge.
  *
- * The React/Lovable design stays in place visually. In production, the actual
+ * The React design stays in place visually. In production, the actual
  * form mechanics are powered by CF7: we render the configured shortcode in PHP
  * (so do_shortcode runs server-side) and pass the resulting HTML to React via
  * `window.IvanTheme.forms[key].html`. React mounts that HTML inside its existing
- * form shell (replacing the prototype fields) so the design stays Lovable and
+ * form shell (replacing the prototype fields) so the design stays polished and
  * the submission/validation pipeline is CF7.
  *
  * If CF7 is not installed or the shortcode is empty, `html` is empty and React

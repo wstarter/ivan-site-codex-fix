@@ -33,7 +33,7 @@ function HvalaPage() {
           <div className="w-16 h-16 mx-auto rounded-full gold-border flex items-center justify-center gold-text">
             <Check size={28} />
           </div>
-          <p className="text-eyebrow gold-text mt-6">LIVE MUSIC EXPERIENCE</p>
+          <p className="text-eyebrow gold-text mt-6">SEDATIVE BAND</p>
           <h1 className="text-h1 mt-3">UPIT JE USPEŠNO <span className="gold-text">POSLAT</span></h1>
 
           <div className="my-8 h-px mx-auto max-w-xs" style={{ background: "color-mix(in oklab, var(--color-primary) 40%, transparent)" }} />

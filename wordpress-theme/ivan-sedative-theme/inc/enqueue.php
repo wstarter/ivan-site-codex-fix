@@ -140,17 +140,21 @@ function ivan_enqueue_app() {
 
 	// Inquiry-only CF7 adapter. Loaded separately from the Vite bundle so CF7
 	// behavior stays auditable and reusable for future .ivan-cf7 forms.
+	$cf7_css_path    = IVAN_THEME_DIR . 'assets/css/ivan-cf7-adapter.css';
+	$cf7_js_path     = IVAN_THEME_DIR . 'assets/js/ivan-cf7-adapter.js';
+	$cf7_css_version = file_exists( $cf7_css_path ) ? filemtime( $cf7_css_path ) : IVAN_THEME_VERSION;
+	$cf7_js_version  = file_exists( $cf7_js_path ) ? filemtime( $cf7_js_path ) : IVAN_THEME_VERSION;
 	wp_enqueue_style(
 		'ivan-cf7-adapter',
 		IVAN_THEME_URI . 'assets/css/ivan-cf7-adapter.css',
 		array(),
-		IVAN_THEME_VERSION
+		$cf7_css_version
 	);
 	wp_enqueue_script(
 		'ivan-cf7-adapter',
 		IVAN_THEME_URI . 'assets/js/ivan-cf7-adapter.js',
 		array(),
-		IVAN_THEME_VERSION,
+		$cf7_js_version,
 		true
 	);
 }
