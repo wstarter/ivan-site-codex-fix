@@ -127,17 +127,16 @@ function ivan_enqueue_app() {
 		return;
 	}
 
-	// Inject the WordPress → React data bridge BEFORE the app bundle.
+	// Attach the WordPress -> React bridge directly to the Vite entry handle.
+	// WordPress reliably prints inline "before" data for the same handle
+	// immediately before its hashed module script.
 	$bridge = ivan_theme_data_payload();
-	wp_register_script( 'ivan-theme-bridge', '', array(), IVAN_THEME_VERSION, false );
-	wp_enqueue_script( 'ivan-theme-bridge' );
+	wp_enqueue_script( 'ivan-app', $entries['js'], array(), IVAN_THEME_VERSION, true );
 	wp_add_inline_script(
-		'ivan-theme-bridge',
+		'ivan-app',
 		'window.IvanTheme = ' . wp_json_encode( $bridge ) . ';',
 		'before'
 	);
-
-	wp_enqueue_script( 'ivan-app', $entries['js'], array( 'ivan-theme-bridge' ), IVAN_THEME_VERSION, true );
 }
 
 /**
