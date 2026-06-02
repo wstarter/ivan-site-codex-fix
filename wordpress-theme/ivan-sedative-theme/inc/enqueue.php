@@ -145,7 +145,25 @@ function ivan_enqueue_app() {
 add_filter( 'script_loader_tag', 'ivan_module_script_tag', 10, 3 );
 function ivan_module_script_tag( $tag, $handle, $src ) {
 	if ( $handle === 'ivan-app' ) {
-		$tag = '<script type="module" crossorigin src="' . esc_url( $src ) . '"></script>' . "\n";
+		// Preserve WordPress inline "before" data, including window.IvanTheme.
+		// Replacing the entire filtered block also removes wp_add_inline_script().
+		$tag = preg_replace_callback(
+			'/<script\b[^>]*\bsrc=(["\']).*?\1[^>]*>/i',
+			function ( $matches ) {
+				$script_tag = $matches[0];
+				if ( preg_match( '/\stype=(["\']).*?\1/i', $script_tag ) ) {
+					$script_tag = preg_replace( '/\stype=(["\']).*?\1/i', ' type="module"', $script_tag, 1 );
+				} else {
+					$script_tag = preg_replace( '/^<script\b/i', '<script type="module"', $script_tag, 1 );
+				}
+				if ( ! preg_match( '/\scrossorigin(?:\s|=|>)/i', $script_tag ) ) {
+					$script_tag = preg_replace( '/^<script\b/i', '<script crossorigin', $script_tag, 1 );
+				}
+				return $script_tag;
+			},
+			$tag,
+			1
+		);
 	}
 	return $tag;
 }
