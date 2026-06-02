@@ -36,6 +36,99 @@ function ivan_cf7_is_active() {
 }
 
 /**
+ * Numeric CF7 IDs configured for the four inquiry routes.
+ */
+function ivan_cf7_inquiry_form_ids() {
+	$s   = ivan_get_settings();
+	$ids = array();
+	foreach ( array( 'cf7_wedding', 'cf7_corporate', 'cf7_club', 'cf7_birthday' ) as $key ) {
+		$raw = trim( (string) ( $s[ $key ] ?? '' ) );
+		if ( $raw === '' ) { continue; }
+		if ( ctype_digit( $raw ) ) {
+			$ids[] = (int) $raw;
+		} elseif ( preg_match( '/id\s*=\s*"?(\d+)"?/', $raw, $matches ) ) {
+			$ids[] = (int) $matches[1];
+		}
+	}
+	return array_values( array_unique( $ids ) );
+}
+
+/**
+ * Scope custom CF7 validation to the configured inquiry forms whenever IDs
+ * are available. Field names remain the fallback for a new form before its
+ * shortcode has been saved in Appearance -> Ivan Settings.
+ */
+function ivan_cf7_is_inquiry_validation_context() {
+	$ids = ivan_cf7_inquiry_form_ids();
+	if ( empty( $ids ) ) { return true; }
+	if ( ! class_exists( 'WPCF7_ContactForm' ) || ! method_exists( 'WPCF7_ContactForm', 'get_current' ) ) {
+		return false;
+	}
+	$form = WPCF7_ContactForm::get_current();
+	return $form && in_array( (int) $form->id(), $ids, true );
+}
+
+function ivan_cf7_posted_value( $key ) {
+	if ( ! isset( $_POST[ $key ] ) ) { return ''; }
+	return trim( sanitize_text_field( wp_unslash( $_POST[ $key ] ) ) );
+}
+
+function ivan_cf7_valid_phone( $value ) {
+	if ( ! preg_match( '/^\+?[\d\s().\/-]+$/', $value ) ) { return false; }
+	$digits = preg_replace( '/\D+/', '', $value );
+	$length = strlen( $digits );
+	return $length >= 9 && $length <= 15;
+}
+
+function ivan_cf7_phone_validation( $result, $tag ) {
+	if ( ! ivan_cf7_is_inquiry_validation_context() || $tag->name !== 'your-phone' ) { return $result; }
+	$value = ivan_cf7_posted_value( $tag->name );
+	if ( $value !== '' && ! ivan_cf7_valid_phone( $value ) ) {
+		$result->invalidate( $tag, 'Unesite ispravan broj telefona, na primer +381 60 1234567.' );
+	}
+	return $result;
+}
+add_filter( 'wpcf7_validate_tel', 'ivan_cf7_phone_validation', 20, 2 );
+add_filter( 'wpcf7_validate_tel*', 'ivan_cf7_phone_validation', 20, 2 );
+
+function ivan_cf7_date_error( $value ) {
+	if ( ! preg_match( '/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/', $value, $matches ) ) {
+		return 'Unesite datum u formatu dan/mesec/godina.';
+	}
+	$day   = (int) $matches[1];
+	$month = (int) $matches[2];
+	$year  = (int) $matches[3];
+	if ( ! checkdate( $month, $day, $year ) ) {
+		return 'Unesite datum u formatu dan/mesec/godina.';
+	}
+	$timezone = wp_timezone();
+	$date     = new DateTimeImmutable( sprintf( '%04d-%02d-%02d', $year, $month, $day ), $timezone );
+	$today    = new DateTimeImmutable( 'today', $timezone );
+	if ( $date < $today ) {
+		return 'Uneti datum je već prošao.';
+	}
+	if ( $date > $today->modify( '+10 years' ) ) {
+		return 'Unesite realan budući datum.';
+	}
+	return '';
+}
+
+function ivan_cf7_date_validation( $result, $tag ) {
+	$date_fields = array( 'event-date', 'wedding-date', 'birthday-date' );
+	if ( ! ivan_cf7_is_inquiry_validation_context() || ! in_array( $tag->name, $date_fields, true ) ) {
+		return $result;
+	}
+	$value = ivan_cf7_posted_value( $tag->name );
+	if ( $value !== '' ) {
+		$error = ivan_cf7_date_error( $value );
+		if ( $error !== '' ) { $result->invalidate( $tag, $error ); }
+	}
+	return $result;
+}
+add_filter( 'wpcf7_validate_text', 'ivan_cf7_date_validation', 20, 2 );
+add_filter( 'wpcf7_validate_text*', 'ivan_cf7_date_validation', 20, 2 );
+
+/**
  * Resolve a shortcode string from a settings value that may be either a full
  * shortcode or a numeric ID.
  */
@@ -98,12 +191,12 @@ function ivan_cf7_admin_notice() {
  * them into CF7 → Contact Forms → New. Field names match the React payload.
  *
  * SHARED:
- *   [text* full_name]
- *   [tel* phone]
- *   [email* email]
+ *   [text* your-name]
+ *   [tel* your-phone minlength:9 maxlength:20]
+ *   [email* your-email]
  *   [acceptance consent]
  *   [text company_site class:ivan-honeypot]   ← honeypot, hide via CSS
- *   [number budget min:500 max:50000 step:500]
+ *   [range* budget-range min:500 max:50000 step:500]
  *
  * WEDDING extras:
  *   wedding_date, wedding_location, guest_count, additional_program,

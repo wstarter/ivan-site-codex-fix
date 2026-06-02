@@ -4,6 +4,7 @@ const LOCK_CLASSES = [
   "nav-open",
   "overlay-lock",
   "modal-open",
+  "ivan-cf7-modal-open",
   "dialog-open",
   "drawer-open",
 ];

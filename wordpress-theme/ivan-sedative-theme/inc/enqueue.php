@@ -137,6 +137,22 @@ function ivan_enqueue_app() {
 		'window.IvanTheme = ' . wp_json_encode( $bridge ) . ';',
 		'before'
 	);
+
+	// Inquiry-only CF7 adapter. Loaded separately from the Vite bundle so CF7
+	// behavior stays auditable and reusable for future .ivan-cf7 forms.
+	wp_enqueue_style(
+		'ivan-cf7-adapter',
+		IVAN_THEME_URI . 'assets/css/ivan-cf7-adapter.css',
+		array(),
+		IVAN_THEME_VERSION
+	);
+	wp_enqueue_script(
+		'ivan-cf7-adapter',
+		IVAN_THEME_URI . 'assets/js/ivan-cf7-adapter.js',
+		array(),
+		IVAN_THEME_VERSION,
+		true
+	);
 }
 
 /**

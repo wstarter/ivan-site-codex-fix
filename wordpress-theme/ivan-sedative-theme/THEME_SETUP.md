@@ -93,20 +93,22 @@ The theme does NOT bundle CAPTCHA keys, SEO meta, or consent logic.
 Create one CF7 form per inquiry type and paste its shortcode/ID into
 **Appearance → Ivan Settings → CF7 form shortcodes**.
 
-Required shared fields (names MUST match the React payload):
+Required shared fields (names MUST match the inquiry adapter):
 
-    [text* full_name]
-    [tel*  phone]
-    [email* email]
+    [text* your-name]
+    [tel* your-phone minlength:9 maxlength:20 placeholder "Npr. +381 60 1234567"]
+    [email* your-email placeholder "Npr. ime@domen.com"]
     [acceptance consent] Saglasan sam da me kontaktirate u vezi upita
-    [number budget min:500 max:50000 step:500]
+    [range* budget-range min:500 max:50000 step:500]
     [text company_site class:ivan-honeypot]   ← honeypot, hide via CSS
 
 Form-specific extras are documented inline in `inc/cf7-bridge.php`.
 
-All forms redirect to `/hvala` on success. If Pixel is enabled, the theme
-automatically fires `fbq('track', 'Lead')` on the `wpcf7mailsent` event and
-then redirects — **never** on button click or validation error.
+All `.ivan-cf7` inquiry forms show the theme success modal after a successful
+AJAX submission. The full `/hvala` confirmation screen remains available from
+that modal. If Pixel is enabled, the theme automatically fires
+`fbq('track', 'Lead')` on the `wpcf7mailsent` event — **never** on button
+click or validation error.
 
 ## 6. `window.IvanTheme` bridge
 

@@ -3,7 +3,6 @@ import { Check, Calendar, Instagram, Home } from "lucide-react";
 import { useEffect } from "react";
 import { CTALink } from "@/components/site/CTAButton";
 import { trackLeadEventPlaceholder } from "@/lib/lead";
-import { brand } from "@/lib/site-data";
 import { getPageHeroImage } from "@/lib/page-hero-assets";
 const heroImage = getPageHeroImage("/hvala");
 
@@ -34,14 +33,12 @@ function HvalaPage() {
           <div className="w-16 h-16 mx-auto rounded-full gold-border flex items-center justify-center gold-text">
             <Check size={28} />
           </div>
-          <h1 className="text-h1 mt-6">Upit je uspešno <span className="gold-text">poslat</span></h1>
-
-          <p className="text-card-title mt-6 gold-text">{brand.secondary.toUpperCase()}</p>
-          <p className="text-signature mt-2 text-muted-foreground">live music experience</p>
+          <p className="text-eyebrow gold-text mt-6">LIVE MUSIC EXPERIENCE</p>
+          <h1 className="text-h1 mt-3">UPIT JE USPEŠNO <span className="gold-text">POSLAT</span></h1>
 
           <div className="my-8 h-px mx-auto max-w-xs" style={{ background: "color-mix(in oklab, var(--color-primary) 40%, transparent)" }} />
 
-          <p className="text-body text-foreground">Hvala Vam na poverenju. Vaš upit je primljen i odgovor stiže u roku od 24h.</p>
+          <p className="text-body text-foreground">Hvala vam na poverenju. Vaš upit je primljen i javićemo se u najkraćem roku.</p>
 
           <div className="mt-6 badge-premium p-5 text-left">
             <p className="eyebrow gold-text">VAŽNO</p>

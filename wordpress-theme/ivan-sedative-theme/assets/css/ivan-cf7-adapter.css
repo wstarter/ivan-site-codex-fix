@@ -1,0 +1,272 @@
+/*
+ * Ivan CF7 inquiry adapter.
+ *
+ * WordPress-only additions for real Contact Form 7 forms. The React build owns
+ * the page layout; this file keeps CF7 system UI visually aligned with it.
+ */
+
+.wpcf7-host .ivan-cf7-section-title {
+  margin: 1.5rem 0 0.75rem;
+  color: var(--color-primary);
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1.35;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.wpcf7-host .ivan-cf7-label,
+.wpcf7-host label {
+  display: block;
+  color: var(--color-foreground);
+  font-size: 0.8rem;
+  font-weight: 700;
+  line-height: 1.45;
+  letter-spacing: 0;
+}
+
+.wpcf7-host .ivan-cf7-help,
+.wpcf7-host .ivan-cf7-note {
+  display: block;
+  margin-top: 0.45rem;
+  color: var(--color-muted-foreground);
+  font-size: 0.76rem;
+  line-height: 1.55;
+  letter-spacing: 0;
+}
+
+.wpcf7-host .ivan-cf7-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.wpcf7-host .ivan-cf7-pills .wpcf7-list-item {
+  margin: 0;
+}
+
+.wpcf7-host .ivan-cf7-budget {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.wpcf7-host .ivan-cf7-budget-current {
+  color: var(--color-primary);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.wpcf7-host .ivan-cf7-budget-range {
+  width: 100%;
+}
+
+.wpcf7-host .ivan-cf7-budget-scale {
+  display: flex;
+  justify-content: space-between;
+  color: var(--color-muted-foreground);
+  font-size: 0.7rem;
+  line-height: 1.4;
+}
+
+.wpcf7-host .ivan-cf7-options + .wpcf7-form-control-wrap,
+.wpcf7-host .ivan-cf7-pills + .wpcf7-form-control-wrap {
+  display: block;
+  margin-top: 0.8rem;
+}
+
+.wpcf7-host .ivan-cf7-submit {
+  appearance: none;
+  min-height: 3rem;
+}
+
+.wpcf7-host .ivan-cf7-submit svg,
+.wpcf7-host .ivan-cf7-submit .icon {
+  display: none !important;
+}
+
+.wpcf7-host .ivan-cf7-submit::before,
+.wpcf7-host .ivan-cf7-submit::after {
+  content: none !important;
+}
+
+.wpcf7-host .wpcf7-not-valid-tip,
+.wpcf7-host .ivan-cf7-inline-error {
+  display: block;
+  margin-top: 0.4rem;
+  color: #ffb4ab;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.45;
+  letter-spacing: 0;
+}
+
+.wpcf7-host .ivan-cf7-invalid {
+  border-color: #ff8178 !important;
+  outline: 1px solid rgba(255, 129, 120, 0.35);
+}
+
+.wpcf7-host .wpcf7-response-output {
+  margin: 1rem 0 0 !important;
+  padding: 0.8rem 0.95rem !important;
+  border: 1px solid rgba(212, 175, 55, 0.45) !important;
+  border-radius: 4px;
+  color: var(--color-foreground);
+  background: rgba(212, 175, 55, 0.06);
+  font-size: 0.78rem;
+  font-weight: 600;
+  line-height: 1.55;
+  letter-spacing: 0;
+}
+
+.wpcf7-host form.invalid .wpcf7-response-output,
+.wpcf7-host form.unaccepted .wpcf7-response-output,
+.wpcf7-host form.payment-required .wpcf7-response-output,
+.wpcf7-host form.failed .wpcf7-response-output,
+.wpcf7-host form.aborted .wpcf7-response-output,
+.wpcf7-host form.spam .wpcf7-response-output {
+  border-color: rgba(255, 129, 120, 0.55) !important;
+  background: rgba(255, 129, 120, 0.08);
+}
+
+.wpcf7-host form.sent .wpcf7-response-output {
+  border-color: rgba(212, 175, 55, 0.55) !important;
+  background: rgba(212, 175, 55, 0.08);
+}
+
+body.ivan-cf7-modal-open {
+  overflow: hidden !important;
+  touch-action: none;
+}
+
+.ivan-cf7-success-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483000;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+}
+
+.ivan-cf7-success-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.76);
+}
+
+.ivan-cf7-success-modal__panel {
+  position: relative;
+  width: min(100%, 38rem);
+  max-height: min(88vh, 48rem);
+  overflow-y: auto;
+  padding: 1.5rem;
+  border: 1px solid rgba(212, 175, 55, 0.52);
+  border-radius: 6px;
+  background: color-mix(in oklab, var(--color-background) 95%, black);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.48);
+}
+
+.ivan-cf7-success-modal__close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  display: grid;
+  width: 2.25rem;
+  height: 2.25rem;
+  place-items: center;
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  border-radius: 50%;
+  color: var(--color-foreground);
+  background: transparent;
+  cursor: pointer;
+  font-size: 1.4rem;
+  line-height: 1;
+}
+
+.ivan-cf7-success-modal__eyebrow {
+  margin: 0 2.75rem 0.7rem 0;
+  color: var(--color-primary);
+  font-size: 0.7rem;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.ivan-cf7-success-modal__title {
+  margin: 0;
+  color: var(--color-foreground);
+  font-size: clamp(1.45rem, 4.8vw, 2.25rem);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: 0;
+}
+
+.ivan-cf7-success-modal__copy,
+.ivan-cf7-success-modal__info {
+  margin: 1rem 0 0;
+  color: var(--color-muted-foreground);
+  font-size: 0.88rem;
+  line-height: 1.65;
+  letter-spacing: 0;
+}
+
+.ivan-cf7-success-modal__info {
+  padding: 0.9rem;
+  border: 1px solid rgba(212, 175, 55, 0.32);
+  border-radius: 4px;
+  background: rgba(212, 175, 55, 0.06);
+}
+
+.ivan-cf7-success-modal__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-top: 1.25rem;
+}
+
+.ivan-cf7-success-modal__action {
+  display: inline-flex;
+  min-height: 2.8rem;
+  align-items: center;
+  justify-content: center;
+  padding: 0.7rem 1rem;
+  border: 1px solid rgba(212, 175, 55, 0.58);
+  border-radius: 3px;
+  color: var(--color-foreground);
+  background: transparent;
+  cursor: pointer;
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: 0;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.ivan-cf7-success-modal__action--primary {
+  color: #15120a;
+  background: var(--color-primary);
+}
+
+body.ivan-cf7-modal-open .wpcf7-host form.sent .wpcf7-response-output {
+  display: none;
+}
+
+@media (max-width: 520px) {
+  .ivan-cf7-success-modal {
+    padding: 0.75rem;
+  }
+
+  .ivan-cf7-success-modal__panel {
+    padding: 1.2rem;
+  }
+
+  .ivan-cf7-success-modal__actions {
+    display: grid;
+  }
+
+  .ivan-cf7-success-modal__action {
+    width: 100%;
+  }
+}

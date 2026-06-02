@@ -4,7 +4,7 @@
  *
  * - Outputs the base Pixel snippet in <head> when enabled.
  * - Adds a small inline listener that fires `fbq('track','Lead')` only after a
- *   successful CF7 submission (`wpcf7mailsent`) and then redirects to /hvala.
+ *   successful inquiry CF7 submission (`wpcf7mailsent`).
  * - NEVER fires Lead on button click, validation error, or unmounted React
  *   prototype submissions.
  *
@@ -67,19 +67,15 @@ function ivan_pixel_lead_listener() {
 		// 4 configured inquiry forms. Never on click, never on validation error.
 		var IVAN_LEAD_IDS = <?php echo $ids_json ? $ids_json : '[]'; ?>;
 		document.addEventListener('wpcf7mailsent', function (e) {
+			var inquiry = e && e.target && e.target.closest ? e.target.closest('.wpcf7-host') : null;
+			if (!inquiry || !inquiry.querySelector('.ivan-cf7')) { return; }
 			var allow = true;
 			if (IVAN_LEAD_IDS.length > 0) {
 				var cfId = e && e.detail && e.detail.contactFormId ? parseInt(e.detail.contactFormId, 10) : 0;
 				allow = IVAN_LEAD_IDS.indexOf(cfId) !== -1;
-				if (!allow) {
-					// Fallback: match by [data-form-key] wrapper on the React shell.
-					var unit = e && e.detail && e.detail.unitTag ? document.getElementById(e.detail.unitTag) : null;
-					if (unit && unit.closest && unit.closest('[data-form-key]')) { allow = true; }
-				}
 			}
 			if (!allow) { return; }
 			if (typeof window.fbq === 'function') { try { fbq('track', 'Lead'); } catch (err) {} }
-			try { window.location.href = '/hvala'; } catch (err) {}
 		});
 	})();
 	</script>
