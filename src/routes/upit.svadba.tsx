@@ -12,10 +12,10 @@ import { AvailabilityCalendar } from "@/components/site/AvailabilityCalendar";
 import { useInquiryForm, required, emailValid } from "@/components/site/form/useInquiryForm";
 import { CTAButton } from "@/components/site/CTAButton";
 import { Cf7FormSlot } from "@/components/site/form/Cf7FormSlot";
-import { getPageHeroAsset } from "@/lib/page-hero-assets";
+import { getPageHeroImage } from "@/lib/page-hero-assets";
 import { budgetConfig } from "@/lib/forms-config";
 import { unlockBodyInteraction } from "@/lib/interaction-safety";
-const hero = getPageHeroAsset("/upit/svadba");
+const heroImage = getPageHeroImage("/upit/svadba");
 
 export const Route = createFileRoute("/upit/svadba")({
   head: () => ({ meta: [{ title: "Popuni upit za svadbu — Ivan Jovanović" }, { name: "description", content: "Pošaljite upit za muzički program za vašu svadbu." }] }),
@@ -50,7 +50,7 @@ function WeddingForm() {
     <InquiryFormLayout
       title="POPUNI UPIT ZA"
       accent="SVADBU"
-      heroImage={hero.src}
+      heroImage={heroImage}
       intro="Popunite kratak upitnik kako bismo razumeli Vaš događaj i poslali Vam tačnu ponudu za muzički program."
       side={<><InfoPanel /><div className="mt-6"><AvailabilityCalendar compact /></div></>}
     >

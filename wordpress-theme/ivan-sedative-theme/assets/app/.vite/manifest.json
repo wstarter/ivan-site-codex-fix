@@ -1,6 +1,6 @@
 {
   "C:/Users/Nikola/Documents/Ivan-site-codex-fix/src/styles.css": {
-    "file": "assets/styles-BsmQjbxN.css",
+    "file": "assets/styles-BStCWnjc.css",
     "src": "C:/Users/Nikola/Documents/Ivan-site-codex-fix/src/styles.css"
   },
   "src/assets/images/Ivan_Jovanovic_transparent.webp": {
@@ -44,12 +44,12 @@
     "src": "src/assets/images/workflow-performance.jpg"
   },
   "src/wp-entry.tsx": {
-    "file": "assets/index-aWp6ODP4.js",
+    "file": "assets/index-CHaV6v8E.js",
     "name": "wp-entry",
     "src": "src/wp-entry.tsx",
     "isEntry": true,
     "css": [
-      "assets/styles-BsmQjbxN.css"
+      "assets/styles-BStCWnjc.css"
     ],
     "assets": [
       "assets/Ivan_Jovanovic_transparent-UDx0j16A.webp",
@@ -62,7 +62,7 @@
       "assets/media-instagram-preview-8zXl2ejM.jpg",
       "assets/thank-you-hero-BF_eoFQU.jpg",
       "assets/hero-ivan-live-performance-C5rOavx-.jpg",
-      "assets/styles-BsmQjbxN.css"
+      "assets/styles-BStCWnjc.css"
     ]
   }
 }

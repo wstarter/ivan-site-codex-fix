@@ -3,8 +3,8 @@ import { Mail, Phone, Instagram, Calendar, Send } from "lucide-react";
 import { brand } from "@/lib/site-data";
 import { CTALink } from "@/components/site/CTAButton";
 import { PageHero } from "@/components/site/PageHero";
-import { getPageHeroAsset } from "@/lib/page-hero-assets";
-const hero = getPageHeroAsset("/kontakt");
+import { getPageHeroImage } from "@/lib/page-hero-assets";
+const heroImage = getPageHeroImage("/kontakt");
 
 export const Route = createFileRoute("/kontakt")({
   head: () => ({
@@ -24,7 +24,7 @@ function KontaktPage() {
         title="POŠALJITE UPIT I"
         accent="REZERVIŠITE TERMIN"
         intro="Najbrži način do ponude je preko upita za tip vašeg događaja. Ako vam je lakše — pišite ili pozovite direktno."
-        image={hero.src}
+        image={heroImage}
       />
 
       <div className="container-site py-10 md:py-14">

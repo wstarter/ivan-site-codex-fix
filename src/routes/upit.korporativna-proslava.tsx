@@ -11,10 +11,10 @@ import { ConsentField } from "@/components/site/form/ConsentField";
 import { useInquiryForm, required, emailValid } from "@/components/site/form/useInquiryForm";
 import { CTAButton } from "@/components/site/CTAButton";
 import { Cf7FormSlot } from "@/components/site/form/Cf7FormSlot";
-import { getPageHeroAsset } from "@/lib/page-hero-assets";
+import { getPageHeroImage } from "@/lib/page-hero-assets";
 import { budgetConfig } from "@/lib/forms-config";
 import { unlockBodyInteraction } from "@/lib/interaction-safety";
-const hero = getPageHeroAsset("/upit/korporativna-proslava");
+const heroImage = getPageHeroImage("/upit/korporativna-proslava");
 
 export const Route = createFileRoute("/upit/korporativna-proslava")({
   head: () => ({ meta: [{ title: "Upit za korporativnu proslavu — Ivan Jovanović" }, { name: "description", content: "Pošaljite upit za muzički program za korporativni event." }] }),
@@ -45,7 +45,7 @@ function CorporateForm() {
     <InquiryFormLayout
       title="POŠALJITE UPIT ZA"
       accent="KORPORATIVNU PROSLAVU"
-      heroImage={hero.src}
+      heroImage={heroImage}
       intro="Popunite formular kako bismo pripremili tačnu ponudu za vaš korporativni event."
       side={<InfoPanel headline="GARANTOVANI ODGOVOR" subline="NAJKASNIJE U ROKU OD" big="24h" />}
     >

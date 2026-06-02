@@ -3,8 +3,8 @@ import { Instagram, Play } from "lucide-react";
 import { brand } from "@/lib/site-data";
 import { CTALink } from "@/components/site/CTAButton";
 import { PageHero } from "@/components/site/PageHero";
-import { getPageHeroAsset } from "@/lib/page-hero-assets";
-const hero = getPageHeroAsset("/instagram");
+import { getPageHeroImage } from "@/lib/page-hero-assets";
+const heroImage = getPageHeroImage("/instagram");
 
 export const Route = createFileRoute("/instagram")({
   head: () => ({
@@ -26,7 +26,7 @@ function InstagramPage() {
         title="INSTAGRAM —"
         accent="NASTUPI & ATMOSFERA"
         intro="Pratimo svaki event. Sve novo objavljujemo na Instagramu — najlakši način da osetite naš zvuk i energiju."
-        image={hero.src}
+        image={heroImage}
       >
         <CTALink to={brand.instagram} external variant="primary"><Instagram size={16} /> OTVORI INSTAGRAM</CTALink>
       </PageHero>

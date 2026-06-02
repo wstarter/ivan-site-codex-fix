@@ -11,10 +11,10 @@ import { ConsentField } from "@/components/site/form/ConsentField";
 import { useInquiryForm, required, emailValid } from "@/components/site/form/useInquiryForm";
 import { CTAButton } from "@/components/site/CTAButton";
 import { Cf7FormSlot } from "@/components/site/form/Cf7FormSlot";
-import { getPageHeroAsset } from "@/lib/page-hero-assets";
+import { getPageHeroImage } from "@/lib/page-hero-assets";
 import { budgetConfig } from "@/lib/forms-config";
 import { unlockBodyInteraction } from "@/lib/interaction-safety";
-const hero = getPageHeroAsset("/upit/rodjendan-jubilej");
+const heroImage = getPageHeroImage("/upit/rodjendan-jubilej");
 
 export const Route = createFileRoute("/upit/rodjendan-jubilej")({
   head: () => ({ meta: [{ title: "Upit za rođendane i jubileje — Ivan Jovanović" }, { name: "description", content: "Pošaljite upit za rođendan, jubilej ili godišnjicu." }] }),
@@ -44,7 +44,7 @@ function BirthdayForm() {
     <InquiryFormLayout
       title="POŠALJITE UPIT ZA"
       accent="ROĐENDAN / JUBILEJ"
-      heroImage={hero.src}
+      heroImage={heroImage}
       intro="Popunite formular kako bismo razumeli vaš događaj i pripremili odgovarajući muzički program."
       side={<InfoPanel headline="ODGOVOR DOBIJATE GARANTOVANO" subline="U ROKU OD" big="24h" />}
     >

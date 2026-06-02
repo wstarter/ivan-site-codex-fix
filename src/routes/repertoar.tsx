@@ -4,8 +4,8 @@ import { workflowSteps } from "@/lib/site-data";
 import { CTALink } from "@/components/site/CTAButton";
 import { Calendar, Send, Music2 } from "lucide-react";
 import { PageHero } from "@/components/site/PageHero";
-import { getPageHeroAsset } from "@/lib/page-hero-assets";
-const hero = getPageHeroAsset("/repertoar");
+import { getPageHeroImage } from "@/lib/page-hero-assets";
+const heroImage = getPageHeroImage("/repertoar");
 
 export const Route = createFileRoute("/repertoar")({
   head: () => ({
@@ -28,7 +28,7 @@ function RepertoarPage() {
           "Vrlo je teško popisati kompletan repertoar koji izvodimo, jer se radi o ogromnom broju pesama. Zato je važno da prvenstveno znate žanrove koje sviramo.",
           "Za pojedinačne i precizne upite vezane za konkretne pesme, najbolje je da se dogovorimo kroz lični razgovor.",
         ]}
-        image={hero.src}
+        image={heroImage}
       />
 
       <div className="container-site py-10 md:py-14">

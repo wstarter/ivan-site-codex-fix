@@ -11,10 +11,10 @@ import { ConsentField } from "@/components/site/form/ConsentField";
 import { useInquiryForm, required, emailValid } from "@/components/site/form/useInquiryForm";
 import { CTAButton } from "@/components/site/CTAButton";
 import { Cf7FormSlot } from "@/components/site/form/Cf7FormSlot";
-import { getPageHeroAsset } from "@/lib/page-hero-assets";
+import { getPageHeroImage } from "@/lib/page-hero-assets";
 import { budgetConfig } from "@/lib/forms-config";
 import { unlockBodyInteraction } from "@/lib/interaction-safety";
-const hero = getPageHeroAsset("/upit/klupska-svirka");
+const heroImage = getPageHeroImage("/upit/klupska-svirka");
 
 export const Route = createFileRoute("/upit/klupska-svirka")({
   head: () => ({ meta: [{ title: "Upit za klupsku svirku — Ivan Jovanović" }, { name: "description", content: "Pošaljite upit za klupsku ili gastro bar svirku." }] }),
@@ -45,7 +45,7 @@ function ClubForm() {
     <InquiryFormLayout
       title="POŠALJITE UPIT ZA"
       accent="KLUPSKU SVIRKU"
-      heroImage={hero.src}
+      heroImage={heroImage}
       intro="Popunite formular sa detaljima za vašu klupsku svirku ili gastro bar event."
       side={<InfoPanel headline="GARANTOVANI ODGOVOR I PONUDA" subline="U ROKU OD" big="24h" />}
     >

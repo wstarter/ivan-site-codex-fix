@@ -19,18 +19,20 @@ export function InquiryFormLayout({
   /** Gold/champagne emphasized word, e.g. "SVADBU" */
   accent?: string;
   intro: string;
-  heroImage: string;
+  heroImage?: string;
   children: ReactNode;
   side: ReactNode;
 }) {
   return (
     <main>
-      <section className="relative overflow-hidden border-b border-border" style={{ minHeight: "40vh" }}>
-        <div className="absolute inset-0 -z-10">
-          <img src={heroImage} alt="" className="w-full h-full object-cover opacity-55" loading="eager" />
-          <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(3,4,5,0.45) 0%, rgba(3,4,5,0.8) 70%, var(--color-background) 100%)" }} />
-        </div>
-        <div className="container-site pt-20 pb-10 md:pt-28 md:pb-14">
+      <section className="relative isolate overflow-hidden border-b border-border" style={{ minHeight: "40vh" }}>
+        {heroImage && (
+          <div className="absolute inset-0 z-0 pointer-events-none" aria-hidden="true">
+            <img src={heroImage} alt="" className="w-full h-full object-cover opacity-55" loading="eager" />
+            <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(3,4,5,0.45) 0%, rgba(3,4,5,0.8) 70%, var(--color-background) 100%)" }} />
+          </div>
+        )}
+        <div className="container-site relative z-10 pt-20 pb-10 md:pt-28 md:pb-14">
           <Link to="/" className="inline-flex items-center gap-2 text-button text-muted-foreground hover:text-foreground mb-6">
             <ArrowLeft size={14} /> NAZAD NA POČETNU
           </Link>

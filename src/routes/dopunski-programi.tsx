@@ -3,8 +3,8 @@ import { additionalPrograms } from "@/lib/site-data";
 import { CTALink } from "@/components/site/CTAButton";
 import { Music2, Send } from "lucide-react";
 import { PageHero } from "@/components/site/PageHero";
-import { getPageHeroAsset } from "@/lib/page-hero-assets";
-const hero = getPageHeroAsset("/dopunski-programi");
+import { getPageHeroImage } from "@/lib/page-hero-assets";
+const heroImage = getPageHeroImage("/dopunski-programi");
 
 export const Route = createFileRoute("/dopunski-programi")({
   head: () => ({
@@ -24,7 +24,7 @@ function DopunskiPage() {
         title="DOPUNSKI"
         accent="PROGRAMI"
         intro="Sve na jednom mestu — kvartet za skup svatova, DJ za after-party, saksofon kao gost-solo i još mnogo toga."
-        image={hero.src}
+        image={heroImage}
       />
 
       <div className="container-site py-10 md:py-14">

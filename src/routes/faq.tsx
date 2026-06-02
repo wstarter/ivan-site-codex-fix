@@ -4,8 +4,8 @@ import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { FaqAnswer } from "@/components/site/FaqAnswer";
 import { PageHero } from "@/components/site/PageHero";
-import { getPageHeroAsset } from "@/lib/page-hero-assets";
-const hero = getPageHeroAsset("/faq");
+import { getPageHeroImage } from "@/lib/page-hero-assets";
+const heroImage = getPageHeroImage("/faq");
 
 export const Route = createFileRoute("/faq")({
   head: () => ({
@@ -27,7 +27,7 @@ function FaqPage() {
         title="NAJČEŠĆA PITANJA I"
         accent="ODGOVORI"
         intro="Odgovori na ključna pitanja klijenata o procesu bukiranja, organizaciji i tehničkim uslovima."
-        image={hero.src}
+        image={heroImage}
       />
 
       <div className="container-site py-10 md:py-14">

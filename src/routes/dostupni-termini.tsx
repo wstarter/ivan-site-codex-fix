@@ -3,8 +3,8 @@ import { AvailabilityCalendar } from "@/components/site/AvailabilityCalendar";
 import { CTALink } from "@/components/site/CTAButton";
 import { Send } from "lucide-react";
 import { PageHero } from "@/components/site/PageHero";
-import { getPageHeroAsset } from "@/lib/page-hero-assets";
-const hero = getPageHeroAsset("/dostupni-termini");
+import { getPageHeroImage } from "@/lib/page-hero-assets";
+const heroImage = getPageHeroImage("/dostupni-termini");
 
 export const Route = createFileRoute("/dostupni-termini")({
   head: () => ({
@@ -24,7 +24,7 @@ function TerminiPage() {
         title="DOSTUPNI"
         accent="TERMINI"
         intro="Pre slanja upita proverite da li smo slobodni za vaš datum. Kalendar je informativan — termin se potvrđuje tek nakon dogovora, avansa i ugovora."
-        image={hero.src}
+        image={heroImage}
       />
 
       <div className="container-site py-10 md:py-14 grid lg:grid-cols-[1fr_320px] gap-6">

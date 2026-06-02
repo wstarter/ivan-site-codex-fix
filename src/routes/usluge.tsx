@@ -3,8 +3,8 @@ import { ChevronRight, Music2, Plus } from "lucide-react";
 import { eventTypes } from "@/lib/site-data";
 import { programIcons } from "@/lib/icons";
 import { PageHero } from "@/components/site/PageHero";
-import { getPageHeroAsset } from "@/lib/page-hero-assets";
-const hero = getPageHeroAsset("/usluge");
+import { getPageHeroImage } from "@/lib/page-hero-assets";
+const heroImage = getPageHeroImage("/usluge");
 
 export const Route = createFileRoute("/usluge")({
   head: () => ({
@@ -24,7 +24,7 @@ function UslugePage() {
         title="SVIRKE ZA SVE"
         accent="VRSTE DOGAĐAJA"
         intro="Svaki event je jedinstven. Izaberite tip događaja i pošaljite upit — odgovor stiže u roku od 24h."
-        image={hero.src}
+        image={heroImage}
       />
 
       <div className="container-site py-10 md:py-14">

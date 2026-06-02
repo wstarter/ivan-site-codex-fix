@@ -1,11 +1,12 @@
-import { getVisualAsset, type VisualAsset, type VisualAssetKey } from "@/lib/assets";
+import { getVisualAsset, type VisualAssetKey } from "@/lib/assets";
+import { getWpAssets } from "@/lib/wp-bridge";
 
 /**
  * Centralized bundled fallbacks for inner-page heroes.
  *
- * `getVisualAsset()` already honors Appearance > Ivan Settings overrides before
- * returning the local fallback. WordPress Featured Image override can be added
- * here later once the theme bridge safely exposes current-page thumbnail data.
+ * Appearance > Ivan Settings overrides are resolved explicitly at read time.
+ * WordPress Featured Image override can be added here later once the theme
+ * bridge safely exposes current-page thumbnail data.
  */
 export const pageHeroFallbackKeys = {
   "/usluge": "uslugeHero",
@@ -24,6 +25,11 @@ export const pageHeroFallbackKeys = {
 
 export type PageHeroRoute = keyof typeof pageHeroFallbackKeys;
 
-export function getPageHeroAsset(route: PageHeroRoute): VisualAsset {
-  return getVisualAsset(pageHeroFallbackKeys[route]);
+export function getPageHeroImage(route: PageHeroRoute): string | undefined {
+  const fallbackKey = pageHeroFallbackKeys[route];
+  const settingsSrc = getWpAssets()?.[fallbackKey]?.src?.trim();
+  if (settingsSrc) return settingsSrc;
+
+  const fallbackSrc = getVisualAsset(fallbackKey).src.trim();
+  return fallbackSrc || undefined;
 }

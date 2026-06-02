@@ -4,8 +4,8 @@ import { useEffect } from "react";
 import { CTALink } from "@/components/site/CTAButton";
 import { trackLeadEventPlaceholder } from "@/lib/lead";
 import { brand } from "@/lib/site-data";
-import { getPageHeroAsset } from "@/lib/page-hero-assets";
-const hero = getPageHeroAsset("/hvala");
+import { getPageHeroImage } from "@/lib/page-hero-assets";
+const heroImage = getPageHeroImage("/hvala");
 
 export const Route = createFileRoute("/hvala")({
   head: () => ({
@@ -21,13 +21,15 @@ function HvalaPage() {
   useEffect(() => { trackLeadEventPlaceholder(); }, []);
 
   return (
-    <main className="relative">
-      <div className="absolute inset-0 -z-10">
-        <img src={hero.src} alt="" aria-hidden="true" className="w-full h-full object-cover opacity-30" loading="lazy" />
-        <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, var(--color-background), color-mix(in oklab, var(--color-background) 85%, black))" }} />
-      </div>
+    <main className="relative isolate">
+      {heroImage && (
+        <div className="absolute inset-0 z-0 pointer-events-none" aria-hidden="true">
+          <img src={heroImage} alt="" className="w-full h-full object-cover opacity-30" loading="eager" />
+          <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, var(--color-background), color-mix(in oklab, var(--color-background) 85%, black))" }} />
+        </div>
+      )}
 
-      <div className="container-site py-16 md:py-28">
+      <div className="container-site relative z-10 py-16 md:py-28">
         <div className="section-glass p-8 md:p-16 text-center max-w-3xl mx-auto">
           <div className="w-16 h-16 mx-auto rounded-full gold-border flex items-center justify-center gold-text">
             <Check size={28} />
