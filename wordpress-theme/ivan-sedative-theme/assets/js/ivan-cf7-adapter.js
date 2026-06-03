@@ -454,10 +454,6 @@
   function prepare(root) {
     getHosts(root || document).forEach(function (host) {
       if (!host.querySelector(".ivan-cf7")) return;
-      host.querySelectorAll("form").forEach(function (form) {
-        form.removeAttribute("novalidate");
-        form.noValidate = false;
-      });
       normalizeSubmit(host);
       translateText(host);
       initBudgetRanges(host);
