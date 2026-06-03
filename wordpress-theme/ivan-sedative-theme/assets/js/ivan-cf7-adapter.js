@@ -265,9 +265,32 @@
     return report ? setConsentError(form) : false;
   }
 
+  function radioGroupLooksRequired(group) {
+    if (
+      group.classList.contains("ivan-cf7-required-radio") ||
+      group.getAttribute("aria-required") === "true" ||
+      group.getAttribute("data-required") === "true" ||
+      group.hasAttribute("data-error")
+    ) {
+      return true;
+    }
+    var row = group.closest(".ivan-cf7-row");
+    var label = row ? row.querySelector(".ivan-cf7-label, .ivan-cf7-copy") : null;
+    return !!(label && label.textContent.indexOf("*") !== -1);
+  }
+
+  function getRequiredRadioGroups(form) {
+    var groups = [];
+    form.querySelectorAll(".ivan-cf7-options, .ivan-cf7-pills").forEach(function (group) {
+      if (!group.querySelector("input[type=radio]") || !radioGroupLooksRequired(group)) return;
+      if (groups.indexOf(group) === -1) groups.push(group);
+    });
+    return groups;
+  }
+
   function validateRequiredRadios(form, report) {
     var valid = true;
-    form.querySelectorAll(".ivan-cf7-required-radio").forEach(function (group) {
+    getRequiredRadioGroups(form).forEach(function (group) {
       if (group.querySelector("input[type=radio]:checked, input[type=checkbox]:checked")) {
         clearGroupError(group);
       } else {
@@ -301,17 +324,57 @@
     if (!validateRequiredRadios(form, report)) valid = false;
     if (!validateConsent(form, report)) valid = false;
 
-    if (!valid && report) {
-      var first = form.querySelector("." + ERROR_CLASS);
-      if (first && first.focus) {
+    return valid;
+  }
+
+  function getValidationTarget(form) {
+    var candidates = form.querySelectorAll(
+      ".ivan-cf7-consent." + ERROR_CLASS + ", " +
+      ".ivan-cf7-options." + ERROR_CLASS + ", " +
+      ".ivan-cf7-pills." + ERROR_CLASS + ", " +
+      "." + ERROR_CLASS + ", .wpcf7-not-valid"
+    );
+    for (var index = 0; index < candidates.length; index += 1) {
+      var candidate = candidates[index];
+      var rect = candidate.getBoundingClientRect();
+      if (rect.width > 0 && rect.height > 0) return candidate;
+    }
+    return candidates[0] || null;
+  }
+
+  function revealValidationTarget(form) {
+    window.requestAnimationFrame(function () {
+      var target = getValidationTarget(form);
+      if (!target) return;
+      var block = target.closest(".ivan-cf7-row, .ivan-cf7-section, .ivan-cf7-consent, .ivan-cf7-options, .ivan-cf7-pills, .wpcf7-form-control-wrap") || target;
+      try {
+        block.scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" });
+      } catch (error) {
+        block.scrollIntoView(false);
+      }
+      if (target.matches && target.matches("input, select, textarea, button")) {
         try {
-          first.focus({ preventScroll: true });
+          target.focus({ preventScroll: true });
         } catch (error) {
-          first.focus();
+          target.focus();
         }
       }
-    }
+    });
+  }
+
+  function surfaceValidation(form) {
+    var valid = validateForm(form, true);
+    if (!valid) revealValidationTarget(form);
     return valid;
+  }
+
+  function hasCf7Runtime(form) {
+    return !!(window.wpcf7 || form.classList.contains("wpcf7-form"));
+  }
+
+  function isSubmitControl(target) {
+    if (!target || !target.closest) return false;
+    return !!target.closest('.ivan-cf7-submit input[type="submit"], input.wpcf7-submit, .ivan-cf7-submit button[type="submit"], button.wpcf7-submit');
   }
 
   function translateText(root) {
@@ -392,7 +455,8 @@
     getHosts(root || document).forEach(function (host) {
       if (!host.querySelector(".ivan-cf7")) return;
       host.querySelectorAll("form").forEach(function (form) {
-        form.setAttribute("novalidate", "novalidate");
+        form.removeAttribute("novalidate");
+        form.noValidate = false;
       });
       normalizeSubmit(host);
       translateText(host);
@@ -401,13 +465,29 @@
     });
   }
 
+  document.addEventListener("click", function (event) {
+    if (!isSubmitControl(event.target)) return;
+    var form = getInquiryForm(event.target);
+    if (form) surfaceValidation(form);
+  }, true);
+
+  document.addEventListener("invalid", function (event) {
+    var form = getInquiryForm(event.target);
+    if (!form || !event.target.matches) return;
+    validateBasicRequired(event.target, true);
+    if (event.target.matches('[name="your-email"]')) validateEmail(event.target, true);
+    if (event.target.matches('[name="your-phone"]')) validatePhone(event.target, true);
+    if (event.target.matches(".ivan-cf7-date")) validateDate(event.target, true);
+    revealValidationTarget(form);
+  }, true);
+
   document.addEventListener("submit", function (event) {
     var form = getInquiryForm(event.target);
-    if (form && !validateForm(form, true)) {
+    if (!form) return;
+    if (!surfaceValidation(form) && !hasCf7Runtime(form)) {
       event.preventDefault();
-      event.stopImmediatePropagation();
     }
-  }, true);
+  });
 
   document.addEventListener("blur", function (event) {
     var input = event.target;
@@ -479,11 +559,18 @@
     document.addEventListener(eventName, function (event) {
       var form = getInquiryForm(event.target);
       if (!form) return;
+      if (eventName === "wpcf7mailfailed" || eventName === "wpcf7spam") {
+        closeSuccessModal();
+      }
       window.setTimeout(function () {
         translateText(form);
         normalizeSubmit(form);
         initBudgetRanges(form);
         updateRadioStates(form);
+        if (eventName === "wpcf7invalid") {
+          validateForm(form, true);
+          revealValidationTarget(form);
+        }
       }, 0);
     });
   });
